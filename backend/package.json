@@ -1,0 +1,24 @@
+{
+  "name": "synclab-backend",
+  "version": "1.0.0",
+  "description": "Api integração synclab",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorBorgesLoures/SyncLab.git"
+  },
+  "keywords": [
+    "synclab",
+    "api",
+    "backend"
+  ],
+  "author": "victor borges",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorBorgesLoures/SyncLab/issues"
+  },
+  "homepage": "https://github.com/VictorBorgesLoures/SyncLab#readme"
+}
