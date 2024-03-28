@@ -8,6 +8,4 @@ var server = require('http').createServer(app);
 
 server.listen(process.env.PORT, req => {
     console.log(`Servidor na porta: ${process.env.PORT}, host:${process.env.HOST}`)
-})
-
-process.env.PORT
+});
