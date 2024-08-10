@@ -8,7 +8,7 @@ let mysqlPool = require('mysql').createPool({
 
 let logger = require('../../logger/Logger');
 
-export class DBConnection {
+export default class DBConnection {
 
     constructor() {
         logger.danger('DBConnection', this);
