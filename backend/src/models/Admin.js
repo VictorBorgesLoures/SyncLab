@@ -6,7 +6,7 @@ export default class Admin extends User {
         return super(id);
     }
 
-    //Add matricula to user
+    /*Add matricula to user*/
     addMatricula(userId, matricula, tipo) {
         //exec query to add new matricula do user
     }
