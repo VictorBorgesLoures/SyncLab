@@ -2,23 +2,25 @@ const Logger = require('../../../logger/Logger');
 
 module.exports = app => {
 
-    //Check if assessing api, then must be a valid user
-    app.use('*', async (req, res, next) => {
-        if(req._parsedUrl.pathname == '/api') {
-            User.fectchUser(req.sessionStore.sessions[req.sessionId].id)
-            .then(u => {
-                if(u) {
-                    req.user = u;
-                    next();
-                } else {
-                    res.status(500).json({status:500, msg:"Sem autorização"})
-                }
-            })
-            .catch(e => {
-                Logger.danger(e);
-            })
-        }
-    })
+    // carrega matrícula na sessão
+    app.post('/matricula', (req, res, next) => {
+        mat = req.body.matricula
+        user = req.user;
+        user.carregarMatricula(mat)
+        .then(matricula => {
+            if(matricula) {
+                user.matricula = matricula;
+                req.session.matricula = matricula;
+                res.status(200).json({status:200, msg:"Seleção de matrícula feita com sucesso"});
+            } else {
+                res.status(404).json({status:404, msg:"Matrícula não encontrada"});
+            }
+        })
+        .catch(e => {
+            Logger.danger(e);
+            res.status(500).json({status:500, msg:"Fatal Error"})
+        })
+    });
     
     require('./login')(app);
     require('./registro')(app);
