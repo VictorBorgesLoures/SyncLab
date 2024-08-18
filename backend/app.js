@@ -5,7 +5,7 @@ var app = require('express')();
 var session = require('express-session')
 
 
-//setting up session -> all data avaliable in req.sessionStore.sessions[session.id]
+//setting up session -> all data avaliable in req.sessionStore.sessions[req.sessionId]
 app.use(session({
     secret: 'synclab cat',
     resave: false,
