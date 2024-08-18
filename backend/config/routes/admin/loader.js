@@ -2,6 +2,7 @@ express = require('express');
 
 module.exports = app => {
 
+    // Para todas as rotas a partir daqui o usuário e verificado se possui tipo admin, caso seja, o object req.user vira admin
     app.use('*', async (req, res, next) => {
         user = req.user;
         if(user.matricula.tipo == 1) {

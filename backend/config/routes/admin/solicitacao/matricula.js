@@ -2,6 +2,12 @@ import Logger from "../../../../logger/Logger";
 
 //api/admin/requisicoes/matricula
 module.exports = app => {
+
+    // api/admin/requisicoes/matricula/
+    app.get('/matricula', async (req, res, next) => {
+
+    });
+
     // api/admin/requisicoes/matricula/addMatricula
     app.post('addMatricula', async (req, res, next) => {
         user = req.user; //tipo de usuario admin
@@ -32,4 +38,14 @@ module.exports = app => {
             })
         }
     });
+
+     // api/admin/requisicoes/matricula/:id
+     app.get('/:id', async (req, res, next) => {
+
+     });
+
+    // api/admin/requisicoes/matricula/:id/editMatricula
+    app.post('/:id/editMatricula')
+
+   
 }
