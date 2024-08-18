@@ -1,3 +1,7 @@
+express = require('express')
+
 module.exports = app => {
-    require("./admin/loader")(app);
+    
+    app.use('/admin' , require("./admin/loader")(express.Router()));
+
 }
