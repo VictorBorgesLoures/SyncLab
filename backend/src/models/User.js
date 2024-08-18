@@ -67,6 +67,18 @@ export default class User {
         })
     }
 
+    reqMatricula(form) {
+        return new Promise (resolve, reject => {
+            if(validators.isValidReqMatricula(form)) {
+                //exec query on db 
+                //essa query deve derificar se já existe uma req com o mesmo número de matrícula e com status de "Em análise"   
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
+    }
+
     //Return user's address list as array
     getEndereco() {
         return this.endereco;
@@ -86,7 +98,6 @@ export default class User {
 
     //Retrive user's Requisitions
     getRequisicoes() {
-
     }
 
     //Try to create a request
