@@ -1,0 +1,44 @@
+@import 'colors.css';
+
+body {
+    font-family:sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.header-logo {
+    max-width:200px;
+    width:20%;
+    margin-left:3%;
+}
+
+.register-button {
+    padding: 10px 20px;
+    background-color: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    margin-right:3%;
+}
+
+.register-button:hover {
+    background-color: var(--lightpurple);
+}
+
+.footer {
+    padding:0;
+    padding-left:3%;
+    padding-top:5%;
+    background-color: var(--purple);
+    color: white;
+    text-align: justify;
+    height:150px;
+}

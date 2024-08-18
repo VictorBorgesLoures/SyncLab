@@ -1,0 +1,32 @@
+@import 'colors.css';
+
+html, body {
+    text-align: center;
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.login-form {
+    background-color: red;
+    margin-top:5%;
+    margin-bottom:5%;
+    color:var(--purple);
+    width:100%;
+}
+
+.form-group {
+    background-color:blue;
+    align-self: center;
+}
+
+label, input {
+    align-self: right;
+    text-align:right;
+    width:200px;
+}
