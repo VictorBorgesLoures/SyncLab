@@ -13,9 +13,17 @@ module.exports = app => {
         }
     });
 
-    const router = express.Router();
-    require('./matricula')(router);
-    require('./projeto')(router);
-    require('./requisicao')(router);
-    app.use('/requisicoes', router)
+    const requisicoesRouter = express.Router();
+    require('./requisicoes/matricula')(requisicoesRouter);
+    require('./requisicoes/projeto')(requisicoesRouter);
+    
+    app.use('/requisicoes', requisicoesRouter);
+
+    const managerRouter = express.Router();
+    require('./manager/matricula')(managerRouter);
+    require('./manager/projeto')(managerRouter);
+    require('./manager/requisicao')(managerRouter);
+
+    app.use('/manager', managerRouter);
+
 }
