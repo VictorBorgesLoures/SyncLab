@@ -1,18 +1,29 @@
 import DBConnection from '../database/Connection';
 import Endereco from './Endereco';
 import validators from '../Validators/User';
+import Logger from '../../logger/Logger';
 
 export default class User {
 
     //Retrieve user's data from database by id (can be the id, username, e-mail or cookie)
-    constructor(id) {
-        this.id = id;
-        if (validators.isValidId(id) ) {
-            //get user form db by id;
-                // return null if dosent exists
-            //load user data to this elements;
-        } else
-            return null;
+    constructor(data) {
+        this.id = data.id;
+        this.username = data.username;
+        this.email = data.email;
+        //...
+    }
+
+    //Fetch user data by id
+    static fetchUsuario(id) {
+        if(validators.isValidId(id)) {
+            user; // query on db get user data
+            user.then(data => {
+                return new User(data);
+            })
+            .catch(e => {
+                Logger.danger(e);
+            })
+        } else return null;
     }
 
     //Create a new User on Database with the params
@@ -22,7 +33,7 @@ export default class User {
         // get modified id form executed query
         id;
         // return new User using the id from query
-        return new User(id);
+        return this.fetchUsuario(id);
     }
 
     /*
@@ -47,7 +58,13 @@ export default class User {
 
     //Return all user's "matriculas" as array
     getMatriculas() {
-         //exec sql query
+        matriculas; //exec sql query
+        matriculas.then(mat => {
+            return mat;
+        })
+        .catch(e => {
+            Logger.danger(e);
+        })
     }
 
     //Return user's address list as array

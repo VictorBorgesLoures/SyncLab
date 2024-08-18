@@ -1,5 +1,5 @@
-import Logger from "../../../../logger/Logger";
-import Admin from "../../../../src/models/Admin";
+import Logger from "../../../logger/Logger";
+import Admin from "../../../src/models/Admin";
 
 //api/admin/requisicoes/matricula
 module.exports = app => {
