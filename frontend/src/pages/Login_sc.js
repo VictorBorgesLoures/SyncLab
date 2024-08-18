@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../styles/global.css';
 import '../styles/login.css';
 import logo from '../assets/logo.png';
-import Footer from '../components/rodape';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -19,14 +18,14 @@ function Login() {
     <div>
         <header className="header">
             <img src={logo} alt="Logo" className="header-logo" />
-            <button className="register-button">Registrar</button>
         </header>
     
     <form className="login-form" onSubmit={handleSubmit}>
         <h1 className='logintxt'>Login</h1>
         <div className="form-group">
-            <label htmlFor="email">Email:</label> <br></br>
+            <p className="label" htmlFor="email">Email:</p>
             <input
+            placeholder='Digite seu email'
                 type="email"
                 id="email"
                 value={email}
@@ -35,19 +34,22 @@ function Login() {
             />
             </div>
             <div className="form-group">
-            <label htmlFor="password">Senha:</label> <br></br>
+            <p className="label" htmlFor="password">Senha:</p>
             <input
+                placeholder='Digite sua senha'
                 type="password"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
             />
+            <button type="submit" className="submit-button">Entrar</button>
+            <button className="register-button">Registrar</button>
         </div>
-        <button type="submit" className="submit-button">Entrar</button>
     </form>
-
-        <Footer />
+        <footer className='footer'>
+            <p className="footer-text">© 2024 SyncLab. Todos os direitos reservados.</p>
+        </footer>
     </div>
     )
 }
