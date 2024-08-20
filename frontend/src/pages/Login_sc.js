@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/global.css';
 import '../styles/login.css';
 import logo from '../assets/logo.png';
 
 function Login() {
+    useEffect(() => {
+        document.title = 'SyncLab';
+    }, []);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
