@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import Login from './pages/Login_sc';
+import React from 'react';
 
-function App() {
+function App({ children }) {
   return (
-    <Login />
+    <div>
+      {children}
+    </div>
   );
 }
 
