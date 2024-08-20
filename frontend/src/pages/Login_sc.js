@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/global.css';
 import '../styles/login.css';
 import logo from '../assets/logo.png';
@@ -9,6 +10,12 @@ function Login() {
     }, []);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+    
+    const handleRegisterClick = () => {
+        navigate('/Registro');
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -47,7 +54,7 @@ function Login() {
                 required
             />
             <button type="submit" className="submit-button">Entrar</button>
-            <button className="register-button">Registrar</button>
+            <button className="register-button" onClick={handleRegisterClick}>Registrar</button>
         </div>
     </form>
         <footer className='footer'>
