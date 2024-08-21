@@ -4,10 +4,10 @@ import User from '../../../src/models/User';
 module.exports = app => {
 
     //registro
-    app.post('/registro', async (req, res, next) => {
+    app.post('/registro', (req, res, next) => {
         User.Registrar(req.body).then(erros => {
             if(erros.length == 0) {
-                res.status(200).json({status:200, msg:"Login realizado com sucesso!"});
+                res.status(200).json({status:200, msg:"Registro realizado com sucesso!"});
             } else {
                 res.status(400).json({status:400, msg:"Dados inválidos", erros});
             }
