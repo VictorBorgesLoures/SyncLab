@@ -1,25 +1,33 @@
-module.exports = new class {
+export default new class {
 
-    _successColor = '\\x1b[32m';
-    _warningColor = '\\x1b[33m';
-    _infoColor = '\\x1b[34m';
-    _dangerColor = '\\x1b[31m';
-    _reset = '\\x1b[0m';
+    _successColor = '\x1b[32m';
+    _warningColor = '\x1b[33m';
+    _infoColor = '\x1b[34m';
+    _dangerColor = '\x1b[31m';
+    _reset = '\x1b[0m';
 
     success(from, message) {
-        this.logMessage(`${this._successColor}[${from}]: ${message}${this._reset}`);
+        if(typeof(message) == "object")
+            message = JSON.stringify(message);
+        this.logMessage(`${this._successColor}[${from}]${this._reset}: ${message}`);
     }
 
     warning(from, message) {
-        this.logMessage(`${this._warningColor}[${from}]: ${message}${this._reset}`);
+        if(typeof(message) == "object")
+            message = JSON.stringify(message);
+        this.logMessage(`${this._warningColor}[${from}]${this._reset}: ${message}`);
     }
 
     info(from, message) {
-        this.logMessage(`${this._infoColor}[${from}]: ${message}${this._reset}`);
+        if(typeof(message) == "object")
+            message = JSON.stringify(message);
+        this.logMessage(`${this._infoColor}[${from}]${this._reset}: ${message}`);
     }
 
     danger(from, message) {
-        this.logMessage(`${this._dangerColor}[${from}]: ${message}${this._reset}`);
+        if(typeof(message) == "object")
+            message = JSON.stringify(message);
+        this.logMessage(`${this._dangerColor}[${from}]${this._reset}: ${message}`);
     }
 
     logMessage(msg) {

@@ -1,7 +1,7 @@
-import DBConnection from '../database/Connection';
-import Endereco from './Endereco';
-import validators from '../Validators/User';
-import Logger from '../../logger/Logger';
+import DBConnection from '../database/Connection.js';
+import Endereco from './Endereco.js';
+import userValidators from '../validators/User.js';
+import Logger from '../../logger/Logger.js';
 
 export default class User {
 
@@ -10,30 +10,110 @@ export default class User {
         this.id = data.id;
         this.username = data.username;
         this.email = data.email;
+        this.matriculas = null;
         //...
     }
 
     //Fetch user data by id
     static fetchUsuario(id) {
-        if(validators.isValidId(id)) {
-            user; // query on db get user data
-            user.then(data => {
-                return new User(data);
-            })
-            .catch(e => {
-                Logger.danger(e);
-            })
-        } else return null;
+        return new Promise((resolve, reject) => {
+            let idType = userValidators.isValidId(id);
+            Logger.info('fetchUsuario', "idType: " + idType);
+            if (idType != null) {
+                let query = "select * from usuario where "
+                query += idType + "=?;";
+
+                DBConnection.createPool(query, [id]).then(data => {
+                    if (data.length > 0)
+                        resolve(new User(data[0]));
+                    else
+                        resolve(null);
+                })
+                    .catch(e => {
+                        Logger.danger('fetchUsuario', e);
+                        reject(e);
+                    })
+            } else {
+                resolve(null);
+            }
+
+        })
+    }
+
+    static fetchEndereco(cep) {
+        return new Promise((resolve, reject) => {
+            let query = "select id from endereco where cep=?;";
+            DBConnection.createPool(query, [cep])
+                .then(resp => {
+                    Logger.info('fetchEndereco', resp);
+                    if (resp.length > 0)
+                        resolve(new Endereco(resp[0]));
+                })
+                .catch(e => {
+                    Logger.danger('fetchEndereco', e);
+                });
+        })
     }
 
     //Create a new User on Database with the params
-    static Register(nome, idade, endereco) {
-        // validade atributes
-        // exec query
-        // get modified id form executed query
-        id;
-        // return new User using the id from query
-        return this.fetchUsuario(id);
+    static Register(data, endereco) {
+        return new Promise((resolve, reject) => {
+
+            this.fetchEndereco(endereco.cep)
+                .then(endDB => {
+                    let endId;
+                    if (endDB == null) {
+                        Logger.info("Register", endereco);
+                        let query = "insert into endereco (rua, cep) value(?,?)";
+                        let keys = [endereco.rua, endereco.cep];
+                        // get modified id form executed qury
+                        DBConnection.createPool(query, keys)
+                            .then(createEndResp => {
+                                Logger.success('Register', createEndResp);
+                                Logger.info("Register", data);
+                                if (createEndResp.affectedRows == 1) {
+                                    endDB = createEndResp.insertId;
+                                }
+                            })
+                            .catch(e => {
+                                console.log(e);
+                                Logger.danger('Register -> Fetch', e);
+                            })
+
+                    } else
+                        endId = endDB.id;
+
+                    let fields = userValidators.registerForm(data, endereco);
+                    if (fields.length == 0) {
+                        // exec query
+                        let query = "insert into usuario(nome, username,senha, dataNasc, email, cpf, numero, complemento, idEndereco) value(?,?,?,?,?,?,?,?,?);";
+                        let keys = [data.nome, data.username, data.senha, data.dataNasc, data.email, data.cpf, data.numero, data.complemento, endId];
+                        DBConnection.createPool(query, keys)
+                            .then(createUserResponse => {
+                                if (createUserResponse.affectedRows > 0) {
+                                    Logger.success('Register:', createUserResponse);
+                                    resolve(true);
+                                } else {
+                                    Logger.warning("Register", "Usuário não foi inserido");
+                                    resolve(false);
+                                }
+                            })
+                            .catch(e => {
+                                Logger.danger('Register', e);
+                                resolve(false);
+                            })
+
+                    } else {
+                        Logger.warning("Register", fields);
+                        resolve(false);
+                    }
+
+                })
+                .catch(e => {
+                    Logger.warning("Register", e);
+                    resolve(false);
+                })
+        });
     }
 
     /*
@@ -44,32 +124,33 @@ export default class User {
         // generate new cookie
         // change user's cookie on db
         // return cookie to set on the user's browser
-            // if impossible to set cookie return null
+        // if impossible to set cookie return null
     }
 
     Logout() {
         // remove user's cookie on db
     }
 
-    //The cookie param is got from user's cookie device (browser)
-    validCookie(cookie) {
-        // check if user's cookie is the same
-    }
-
     //Return all user's "matriculas" as array
     getMatriculas() {
-        matriculas; //exec sql query
-        matriculas.then(mat => {
-            return mat;
-        })
-        .catch(e => {
-            Logger.danger(e);
+        return new Promise((resolve, reject) => {
+            if (this.matriculas != null)
+                resolve(this.matriculas);
+            let query = "select * from matricula where id=?";
+            DBConnection.createPool(query, [this.id])
+                .then(data => {
+                    Logger.info('getMatriculas', data);
+                    resolve(data);
+                }).catch(e => {
+                    Logger.danger('getMatriculas', e);
+                    reject({ status: 500, msg: ['Error on query'] });
+                })
         })
     }
 
     reqMatricula(form) {
-        return new Promise (resolve, reject => {
-            if(validators.isValidReqMatricula(form)) {
+        return new Promise(resolve, reject => {
+            if (validators.isValidReqMatricula(form)) {
                 //exec query on db 
                 //essa query deve derificar se já existe uma req com o mesmo número de matrícula e com status de "Em análise"   
                 resolve(true);
