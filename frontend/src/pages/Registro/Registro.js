@@ -9,6 +9,19 @@ function Registro() {
         document.title = 'SyncLab';
     }, []);
 
+    const [rua, setRua] = useState('');
+    const [numero, setNumero] = useState('');
+    const [cep, setCep] = useState('');
+    const [complemento, setComplemento] = useState('');
+    const [data, setData] = useState('');
+    const [username, setUsername] = useState('');
+    const [nome, setNome] = useState('');
+    const [senha, setSenha] = useState('');
+    const [senhaconf, setSenhaconf] = useState('');
+    const [email, setEmail] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [matricula, setMatricula] = useState('');
+
     return (
         <>
             <Header showBtn={true} />
@@ -22,6 +35,8 @@ function Registro() {
                         placeholder='Digite sua rua'
                         type="text"
                         id="rua"
+                        value={rua}
+                        onChange={(e) => setRua(e.target.value)}
                         required
                         />
 
@@ -31,6 +46,8 @@ function Registro() {
                                 <input
                                 placeholder='Digite seu número'
                                 type="text"
+                                value={numero}
+                                onChange={(e) => setNumero(e.target.value)}
                                 id="text"
                                 required
                                 />
@@ -41,6 +58,8 @@ function Registro() {
                                 <input
                                 placeholder='Digite seu CEP'
                                 type="text"
+                                value={cep}
+                                onChange={(e) => setCep(e.target.value)}
                                 id="cep"
                                 required
                                 />
@@ -50,6 +69,8 @@ function Registro() {
                         <input
                         placeholder='Digite o complemento'
                         type="text"
+                        value={complemento}
+                        onChange={(e) => setComplemento(e.target.value)}
                         id="complemento"
                         required
                         />
@@ -60,6 +81,8 @@ function Registro() {
                         <input
                         placeholder='Digite seu Nome'
                         type="text"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
                         id="nome"
                         required
                         />
@@ -68,6 +91,8 @@ function Registro() {
                         <input
                         placeholder='Digite seu e-mail'
                         type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         id="email"
                         required
                         />
@@ -78,6 +103,8 @@ function Registro() {
                                 <input
                                 placeholder='Digite seu username'
                                 type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 id="username"
                                 required
                                 />
@@ -88,6 +115,8 @@ function Registro() {
                                 <input
                                 placeholder='dd/mm/aaaa'
                                 type="date"
+                                value={data}
+                                onChange={(e) => setData(e.target.value)}
                                 id="data"
                                 required
                                 />
@@ -98,7 +127,9 @@ function Registro() {
                         <input
                         placeholder='Digite seu e-mail'
                         type="password"
-                        id="senha_conf"
+                        id="senha"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
                         required
                         />
 
@@ -107,6 +138,8 @@ function Registro() {
                         placeholder='Confirme a senha'
                         type="password"
                         id="senha_conf"
+                        value={senhaconf}
+                        onChange={(e) => setSenhaconf(e.target.value)}
                         required
                         />
 
@@ -115,6 +148,8 @@ function Registro() {
                         placeholder='Digite seu CPF'
                         type="text"
                         id="cpf"
+                        value={cpf}
+                        onChange={(e) => setCpf(e.target.value)}
                         required
                         />
 
@@ -123,6 +158,8 @@ function Registro() {
                         placeholder='Digite sua matrícula'
                         type="text"
                         id="matricula"
+                        value={matricula}
+                        onChange={(e) => setMatricula(e.target.value)}
                         required
                         />
 
