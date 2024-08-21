@@ -9,14 +9,17 @@ function Login() {
     useEffect(() => {
         document.title = 'SyncLab';
     }, []);
+
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Enviar email e senha para o servidor
-        console.log('Email:', email);
-        console.log('Password:', password);
+        
+        navigate('/Dashboard');
     };
 
     return (
