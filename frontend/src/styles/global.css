@@ -31,7 +31,7 @@ a {
 }
 
 .header-logo {
-    max-width:200px;
+    max-width:180px;
     width:20%;
     margin-left:3%;
 }
@@ -61,4 +61,24 @@ a {
     background-color: var(--lightgray);
     height:100%;
     width:100%;
+}
+
+.painel-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:18px;
+    width: 100%;
+    font-weight: bold;
+    color: var(--gray);
+}
+
+.painel-button:hover {
+    background-color: var(--fillpurple)
+}
+
+.painel-text {
+    padding-left:12px;
+    width: 100px;
+    text-align: left;
 }
