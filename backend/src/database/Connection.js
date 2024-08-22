@@ -1,29 +1,39 @@
-let mysqlPool = require('mysql').createPool({
-    connectionLimit : 10,
+import { createConnection, createPool } from 'mysql2'
+import Logger from '../../logger/Logger.js';
+import env from 'dotenv';
+
+env.config();
+
+let mysqlPool = createConnection({
     host     : process.env.DB_HOST,
     user     : process.env.DB_USER,
     password : process.env.DB_PASSWORD,
     database : process.env.DB_DATABASE,
 });
 
-let logger = require('../../logger/Logger');
 
 export default class DBConnection {
 
     constructor() {
-        logger.danger('DBConnection', this);
-        //throw new Error("DBConnection can't be instaciated");
+        if (this.constructor === UserManager) {
+            Logger.danger('DBConnection tried to be instaciated');
+            throw new Error("DBConnection can't be instaciated");
+        }
     }
 
-    static async createPool(query) {
+    static async createPool(query, keys = []) {
         return new Promise((resolve, reject) => {
-            mysqlPool.query(query, (err, results) => {
-                if(err) {
-                    logger.danger('DBConnection', 'Error on query: '+ query);
-                    reject(err);
-                } else 
-                    resolve(results);                
-            });
+            mysqlPool.query(query, keys, (error, results) => {
+                if (error) {
+                    Logger.danger('DBConnection: QUERY', error);
+                    reject({ status: 500, msg: ['Error on query'] });
+                }
+                else {
+                    Logger.info('DBConnection', results);
+                    resolve(results);
+                }              
+            });      
+
         });
     }
 }

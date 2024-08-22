@@ -1,5 +1,5 @@
-import DBConnection from '../database/Connection';
-import User from './User';
+import DBConnection from '../database/Connection.js';
+import User from './User.js';
 
 export default class Admin extends User {
     constructor(id) {

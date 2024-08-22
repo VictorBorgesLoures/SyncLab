@@ -1,6 +1,6 @@
-const Logger = require("../../../logger/Logger");
+import Logger from "../../../logger/Logger.js"
 
-module.exports = app => {
+export default app => {
      // carrega matrícula na sessão
      app.post('/api/matricula', (req, res, next) => {
         mat = req.body.matricula

@@ -1,7 +1,7 @@
-import Discente from '../../../src/models/Discente'
-express = require('express');
+import Discente from '../../../src/models/Discente.js'
+import express from 'express'
 
-module.exports = app => {
+export default app => {
 
     app.use('*', async (req, res, next) => {
         user = req.user;
@@ -13,7 +13,7 @@ module.exports = app => {
         }
     })
     
-    projetoRouter = express.Router();
+    let projetoRouter = express.Router();
 
 
 }
