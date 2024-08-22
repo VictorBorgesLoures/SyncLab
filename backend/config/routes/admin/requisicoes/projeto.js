@@ -1,8 +1,8 @@
-import Logger from "../../../../logger/Logger";
-import Admin from "../../../../src/models/Admin";
+import Logger from "../../../../logger/Logger.js";
+import Admin from "../../../../src/models/Admin.js";
 
 //api/admin/requisicoes
-module.exports = app => {
+export default app => {
 
     // api/admin/requisicoes/projeto/
     app.get('/projeto', (req, res, next) => {

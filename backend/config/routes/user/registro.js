@@ -1,12 +1,12 @@
-import Logger from '../../../logger/Logger';
-import User from '../../../src/models/User';
+import Logger from '../../../logger/Logger.js';
+import User from '../../../src/models/User.js';
 
-module.exports = app => {
+export default app => {
 
     //registro
     app.post('/registro', (req, res, next) => {
-        User.Registrar(req.body).then(erros => {
-            if(erros.length == 0) {
+        User.Registrar(req.body.user, req.body.endereco).then(resp => {
+            if(resp) {
                 res.status(200).json({status:200, msg:"Registro realizado com sucesso!"});
             } else {
                 res.status(400).json({status:400, msg:"Dados inválidos", erros});

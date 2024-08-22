@@ -1,9 +1,12 @@
-const Logger = require('../../../logger/Logger');
+import Logger from '../../../logger/Logger.js';
+import login from './login.js'
+import registro from './registro.js'
+import matricula from './matricula.js'
 
-module.exports = app => {
+export default app => {
 
-    require('./login')(app);
-    require('./registro')(app);
-    require('./matricula')(app);
+    login(app);
+    registro(app);
+    matricula(app);
 
 }

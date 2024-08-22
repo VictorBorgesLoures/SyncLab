@@ -1,6 +1,11 @@
-express = require('express');
+import express from 'express'
+import reqMatricula from './requisicoes/matricula.js'
+import reqProjeto from './requisicoes/projeto.js'
+import manMatricula from './manager/matricula.js'
+import manProjeto from './manager/projeto.js'
+import manRequisicao from './manager/requisicao.js'
 
-module.exports = app => {
+export default app => {
 
     // Para todas as rotas a partir daqui o usuário e verificado se possui tipo admin, caso seja, o object req.user vira admin
     app.use('*', async (req, res, next) => {
@@ -14,15 +19,15 @@ module.exports = app => {
     });
 
     const requisicoesRouter = express.Router();
-    require('./requisicoes/matricula')(requisicoesRouter);
-    require('./requisicoes/projeto')(requisicoesRouter);
+    reqMatricula(requisicoesRouter);
+    reqProjeto(requisicoesRouter);
     
     app.use('/requisicoes', requisicoesRouter);
 
     const managerRouter = express.Router();
-    require('./manager/matricula')(managerRouter);
-    require('./manager/projeto')(managerRouter);
-    require('./manager/requisicao')(managerRouter);
+    manMatricula(managerRouter);
+    manProjeto(managerRouter);
+    manRequisicao(managerRouter);
 
     app.use('/manager', managerRouter);
 

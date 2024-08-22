@@ -1,6 +1,9 @@
-module.exports = app => {
+import middlewares from './middlewares/loader.js'
+import routes from './routes/loader.js'
 
-    require('./middlewares/loader')(app)
-    require('./routes/loader')(app);
+export default app => {
+
+    middlewares(app)
+    routes(app);
 
 }

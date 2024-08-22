@@ -1,10 +1,14 @@
-express = require('express');
+import express from 'express'
+import userLoader from './user/loader.js'
+import discenteLoader from './discente/loader.js'
+import docenteLoader from './docente/loader.js'
+import adminLoader from './admin/loader.js'
 
-module.exports = app => {
+export default app => {
 
     //Load login, register, and api outh routes // FEITO
-    userRouter = express.Router();
-    require('./user/loader')(userRouter);
+    let userRouter = express.Router();
+    userLoader(userRouter);
 
     //oauth api routes
     app.use('*', userRouter);    
@@ -27,21 +31,21 @@ module.exports = app => {
             }
         });    
 
-    apiRoutes = express.Router();
+    let apiRoutes = express.Router();
 
     //Load discente routes
-    discenteRouter = express.Router();
-    require('./discente/loader')(discenteRouter);
+    let discenteRouter = express.Router();
+    discenteLoader(discenteRouter);
     apiRoutes.use('/discente', discenteRouter);
 
     //Load docente routes
-    docenteRouter = express.Router();
-    require('./docente/loader')(docenteRouter);
+    let docenteRouter = express.Router();
+    docenteLoader(docenteRouter);
     apiRoutes.use('/docente', docenteRouter);
 
     //Load admin routes
-    adminRouter = express.Router();
-    require("./admin/loader")(adminRouter);
+    let adminRouter = express.Router();
+    adminLoader(adminRouter);
     apiRoutes.use('/admin' , adminRouter);
 
     app.use('/api', apiRoutes);

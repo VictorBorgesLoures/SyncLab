@@ -1,9 +1,12 @@
-require('dotenv').config();
-const test = require('./teste.js');
+import dotenv from 'dotenv'
+import express from 'express'
+import session from 'express-session'
+import config from './config/loader.js'
+import http from 'http'
 
-var app = require('express')();
+dotenv.config();
 
-var session = require('express-session');
+var app = express();
 
 //setting up session -> all data avaliable in req.sessionStore.sessions[req.sessionId]
 app.use(session({
@@ -12,9 +15,9 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-require('./config/loader')(app);
+config(app);
 
-var server = require('http').createServer(app);
+var server = http.createServer(app);
 
 server.listen(process.env.PORT, req => {
     console.log(`Servidor na porta: ${process.env.PORT}, host:${process.env.HOST}`);

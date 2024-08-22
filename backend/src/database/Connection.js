@@ -1,7 +1,7 @@
 import { createConnection, createPool } from 'mysql2'
 import Logger from '../../logger/Logger.js';
-
 import env from 'dotenv';
+
 env.config();
 
 let mysqlPool = createConnection({

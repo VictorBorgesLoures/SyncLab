@@ -56,9 +56,8 @@ export default class User {
     }
 
     //Create a new User on Database with the params
-    static Register(data, endereco) {
+    static Registrar(data, endereco) {
         return new Promise((resolve, reject) => {
-
             this.fetchEndereco(endereco.cep)
                 .then(endDB => {
                     let endId;
@@ -116,19 +115,9 @@ export default class User {
         });
     }
 
-    /*
-    Set a new cookie on the current user, if not possible return null
-    OBS: the user cookie will be associated with "matricula"
-    */
-    Login() {
-        // generate new cookie
-        // change user's cookie on db
-        // return cookie to set on the user's browser
-        // if impossible to set cookie return null
-    }
-
-    Logout() {
-        // remove user's cookie on db
+    //Compare user password if password param
+    comparePassword(password) {
+        return this.password == password;
     }
 
     //Return all user's "matriculas" as array
