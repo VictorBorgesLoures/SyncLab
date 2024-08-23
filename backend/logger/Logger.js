@@ -6,25 +6,25 @@ export default new class {
     _dangerColor = '\x1b[31m';
     _reset = '\x1b[0m';
 
-    success(from, message) {
+    success(from, message = "") {
         if(typeof(message) == "object")
             message = JSON.stringify(message);
         this.logMessage(`${this._successColor}[${from}]${this._reset}: ${message}`);
     }
 
-    warning(from, message) {
+    warning(from, message = "") {
         if(typeof(message) == "object")
             message = JSON.stringify(message);
         this.logMessage(`${this._warningColor}[${from}]${this._reset}: ${message}`);
     }
 
-    info(from, message) {
+    info(from, message = "") {
         if(typeof(message) == "object")
             message = JSON.stringify(message);
         this.logMessage(`${this._infoColor}[${from}]${this._reset}: ${message}`);
     }
 
-    danger(from, message) {
+    danger(from, message = "") {
         if(typeof(message) == "object")
             message = JSON.stringify(message);
         this.logMessage(`${this._dangerColor}[${from}]${this._reset}: ${message}`);

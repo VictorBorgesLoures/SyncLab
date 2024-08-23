@@ -5,6 +5,7 @@ export default app => {
 
     //registro
     app.post('/registro', (req, res, next) => {
+        Logger.info("Registro", req.body)
         User.Registrar(req.body.user, req.body.endereco).then(resp => {
             if(resp) {
                 res.status(200).json({status:200, msg:"Registro realizado com sucesso!"});

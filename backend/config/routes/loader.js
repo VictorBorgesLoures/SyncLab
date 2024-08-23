@@ -11,24 +11,31 @@ export default app => {
     userLoader(app);
 
     //oauth api routes
-    app.use('*', (req, res, next) => {    
+    app.use('*', (req, res, next) => {
         //Check if assessing api, then must be a valid user
-        Logger.info("SERVER","Firs u");
-        if(req._parsedUrl.pathname == '/api') {
-            User.fectchUser(req.sessionStore.sessions[req.sessionId].id)
-            .then(u => {
-                if(u && req.session.matricula) {
-                    u.matricula = req.session.matricula;
-                    req.user = u;
-                    next();
+        if (req._parsedUrl.pathname == '/api') {
+            Logger.info("ROUTER", "API CALL");
+            req.session.reload(err => {
+                if (!err) {
+                    User.fectchUser(req.session.user)
+                        .then(u => {
+                            if (u && req.session.matricula) {
+                                u.matricula = req.session.matricula;
+                                req.user = u;
+                                next();
+                            } else {
+                                res.status(500).json({ status: 500, msg: "Sem autorização" })
+                            }
+                        })
+                        .catch(e => {
+                            Logger.danger(e);
+                        })
                 } else {
-                    res.status(500).json({status:500, msg:"Sem autorização"})
+                    res.status(500).json({ status: 500, msg: "Sem autorização" })
                 }
             })
-            .catch(e => {
-                Logger.danger(e);
-            })
         } else {
+            Logger.info("ROUTER", "NOT API CALL");
             next();
         }
     });
@@ -48,7 +55,7 @@ export default app => {
     //Load admin routes
     let adminRouter = express.Router();
     adminLoader(adminRouter);
-    apiRoutes.use('/admin' , adminRouter);
+    apiRoutes.use('/admin', adminRouter);
 
     app.use('/api', apiRoutes);
 
