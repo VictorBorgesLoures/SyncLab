@@ -9,7 +9,14 @@ function Dashboard() {
 
     return (
         <>
-            <Painel></Painel>
+            <div className="dashboard-container">
+                <div className="div-painel">
+                    <Painel></Painel>
+                </div>
+                <div className="dashboard-content">
+                    Conteudo
+                </div>
+            </div>
         </>
     )
 }
