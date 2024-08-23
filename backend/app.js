@@ -20,5 +20,5 @@ config(app);
 var server = http.createServer(app);
 
 server.listen(process.env.PORT, req => {
-    console.log(`Servidor na porta: ${process.env.PORT}, host:${process.env.HOST}`);
+    console.log(`Servidor na porta: ${process.env.PORT}, host:${process.env.HOST || "localhost"}`);
 });

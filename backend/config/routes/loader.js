@@ -3,33 +3,35 @@ import userLoader from './user/loader.js'
 import discenteLoader from './discente/loader.js'
 import docenteLoader from './docente/loader.js'
 import adminLoader from './admin/loader.js'
+import Logger from '../../logger/Logger.js'
 
 export default app => {
 
     //Load login, register, and api outh routes // FEITO
-    let userRouter = express.Router();
-    userLoader(userRouter);
+    userLoader(app);
 
     //oauth api routes
-    app.use('*', userRouter);    
+    app.use('*', (req, res, next) => {    
         //Check if assessing api, then must be a valid user
-        app.use('*', (req, res, next) => {
-            if(req._parsedUrl.pathname == '/api') {
-                User.fectchUser(req.sessionStore.sessions[req.sessionId].id)
-                .then(u => {
-                    if(u && req.session.matricula) {
-                        u.matricula = req.session.matricula;
-                        req.user = u;
-                        next();
-                    } else {
-                        res.status(500).json({status:500, msg:"Sem autorização"})
-                    }
-                })
-                .catch(e => {
-                    Logger.danger(e);
-                })
-            }
-        });    
+        Logger.info("SERVER","Firs u");
+        if(req._parsedUrl.pathname == '/api') {
+            User.fectchUser(req.sessionStore.sessions[req.sessionId].id)
+            .then(u => {
+                if(u && req.session.matricula) {
+                    u.matricula = req.session.matricula;
+                    req.user = u;
+                    next();
+                } else {
+                    res.status(500).json({status:500, msg:"Sem autorização"})
+                }
+            })
+            .catch(e => {
+                Logger.danger(e);
+            })
+        } else {
+            next();
+        }
+    });
 
     let apiRoutes = express.Router();
 

@@ -5,6 +5,7 @@ export default app => {
 
     //login
     app.post('/login', async (req, res, next) => {
+        console.log("AQUI");
         User.fetchUsuario(req.body.id).then(u => {
             if(u) {
                 if(u.comparePassword(req.body.password)) {
