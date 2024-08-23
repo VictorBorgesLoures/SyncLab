@@ -3,8 +3,6 @@
 create database synclab;
 
 use synclab;
-
-
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -15,7 +13,7 @@ CREATE TABLE Usuario (
     cpf VARCHAR(11) NOT NULL UNIQUE,
     numero INT NOT NULL,
     complemento VARCHAR(255) NOT NULL,
-    idEnrececo INT NOT NULL
+    idEndereco INT NOT NULL
 );
 
 CREATE TABLE Laboratorio (

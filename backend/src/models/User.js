@@ -7,9 +7,9 @@ export default class User {
 
     //Retrieve user's data from database by id (can be the id, username, e-mail or cookie)
     constructor(data) {
-        this.id = data.id;
-        this.username = data.username;
-        this.email = data.email;
+        for(let item in data) {
+            this[item] = data[item];
+        }
         this.matriculas = null;
         //...
     }
@@ -48,6 +48,8 @@ export default class User {
                     Logger.info('fetchEndereco', resp);
                     if (resp.length > 0)
                         resolve(new Endereco(resp[0]));
+                    else
+                        resolve(null)
                 })
                 .catch(e => {
                     Logger.danger('fetchEndereco', e);
@@ -59,33 +61,27 @@ export default class User {
     static Registrar(data, endereco) {
         return new Promise((resolve, reject) => {
             this.fetchEndereco(endereco.cep)
-                .then(endDB => {
+                .then(async endDB => {
                     let endId;
                     if (endDB == null) {
                         Logger.info("Register", endereco);
                         let query = "insert into endereco (rua, cep) value(?,?)";
                         let keys = [endereco.rua, endereco.cep];
                         // get modified id form executed qury
-                        DBConnection.createPool(query, keys)
-                            .then(createEndResp => {
-                                Logger.success('Register', createEndResp);
-                                Logger.info("Register", data);
-                                if (createEndResp.affectedRows == 1) {
-                                    endDB = createEndResp.insertId;
-                                }
-                            })
-                            .catch(e => {
-                                console.log(e);
-                                Logger.danger('Register -> Fetch', e);
-                            })
-
+                        let createEndResp = await DBConnection.createPool(query, keys);
+                        if (createEndResp && createEndResp.affectedRows == 1) {
+                            Logger.info("Register", "Created endereco")
+                            endId = createEndResp.insertId;
+                        } else {
+                            resolve({status:500, msg: "FODEU"});
+                        }
                     } else
                         endId = endDB.id;
 
                     let fields = userValidators.registerForm(data, endereco);
                     if (fields.length == 0) {
                         // exec query
-                        let query = "insert into usuario(nome, username,senha, dataNasc, email, cpf, numero, complemento, idEndereco) value(?,?,?,?,?,?,?,?,?);";
+                        let query = "insert into usuario(nome, username, senha, dataNasc, email, cpf, numero, complemento, idEndereco) value(?,?,?,?,?,?,?,?,?);";
                         let keys = [data.nome, data.username, data.senha, data.dataNasc, data.email, data.cpf, data.numero, data.complemento, endId];
                         DBConnection.createPool(query, keys)
                             .then(createUserResponse => {
@@ -117,7 +113,9 @@ export default class User {
 
     //Compare user password if password param
     comparePassword(password) {
-        return this.password == password;
+        if(userValidators.isValidPassword(password))
+            return this.senha == password;
+        else return false;
     }
 
     //Return all user's "matriculas" as array

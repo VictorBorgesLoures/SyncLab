@@ -1,4 +1,4 @@
-import { createConnection, createPool } from 'mysql2'
+import { createConnection } from 'mysql2'
 import Logger from '../../logger/Logger.js';
 import env from 'dotenv';
 
@@ -21,7 +21,7 @@ export default class DBConnection {
         }
     }
 
-    static async createPool(query, keys = []) {
+    static createPool(query, keys = []) {
         return new Promise((resolve, reject) => {
             mysqlPool.query(query, keys, (error, results) => {
                 if (error) {

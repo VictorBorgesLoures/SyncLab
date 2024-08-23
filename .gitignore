@@ -1,4 +1,5 @@
 backend/node_modules
 backend/teste.js
 backend/.env
+test_list*
 frontend/node_modules
