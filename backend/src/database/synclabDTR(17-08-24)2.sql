@@ -3,6 +3,7 @@
 create database synclab;
 
 use synclab;
+
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,

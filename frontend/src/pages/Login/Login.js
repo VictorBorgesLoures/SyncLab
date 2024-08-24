@@ -25,9 +25,10 @@ class Login extends Component {
         event.preventDefault();
         console.log("aqui");
         // Enviar email e senha para o servidor
-        fetchAPI("/login", { id: 1, password: 23041507 })
+        fetchAPI("/login", "post", { id: 1, password: 23041507 })
             .then(res => {
                 console.log(res);
+                res.json().then(r => console.log(r));
             }).catch(e => {
                 console.log(e)
             })
@@ -63,7 +64,7 @@ class Login extends Component {
                                 onChange={(e) => this.setState({password: e.target.value})}
                                 required
                             />
-                            <button type="submit" onSubmit={this.handleSubmit} className="submit-button">Entrar</button>
+                            <button type="submit" className="submit-button">Entrar</button>
                             <Link to="/Registro">
                                 <button className="register-button">Registrar</button>
                             </Link>

@@ -4,7 +4,6 @@ import routes from './routes/loader.js'
 
 export default app => {
     Logger.info("ROUTES","Loading Routes")
-    middlewares(app)
+    middlewares(app);
     routes(app);
-
 }

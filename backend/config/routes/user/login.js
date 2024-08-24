@@ -15,7 +15,7 @@ export default app => {
                         req.session.user = u;
                         req.session.save(err => {
                             console.log(req.sessionStore);
-                            res.cookie(req.sessionID);
+                            res.cookie("sessionID", req.sessionID);
                             if(err) res.status(500).json({status:500, msg:"Não foi possível salvar a sessão"});
                             else res.status(200).json({status:200, msg:"Login realizado com sucesso!"});
                         });                        
@@ -37,7 +37,7 @@ export default app => {
     });
 
     app.get('/logout', async (req, res, next) => {
-        eq.sessionStore.sessions[req.sessionId].id = null;
+        req.sessionStore.sessions[req.sessionId].id = null;
         req.sessionStore.sessions[req.sessionId].matricula = null;
         res.status(200).json({
             status:200,
