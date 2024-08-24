@@ -1,0 +1,16 @@
+@import url('../../styles/variables.css');
+
+.dashboard-container {
+    display:flex;
+    flex-direction: row;
+    background-color: white;
+    height:100%;
+}
+
+.dashboard-content {
+    margin-left:15px;
+}
+
+.div-painel{
+    height:100vh;
+}
