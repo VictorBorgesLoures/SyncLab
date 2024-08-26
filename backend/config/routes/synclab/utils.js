@@ -1,5 +1,5 @@
 import Logger from "../../../logger/Logger.js";
-import validators from '../../../src/Validators/User.js';
+import validators from '../../../src/validators/User.js';
 import User from "../../../src/models/User.js";
 
 export default app => {

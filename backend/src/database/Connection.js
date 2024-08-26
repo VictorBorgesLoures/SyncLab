@@ -1,6 +1,7 @@
 import { createConnection } from 'mysql2'
 import Logger from '../../logger/Logger.js';
 import env from 'dotenv';
+import DBResponse from '../models/DBResponse.js';
 
 env.config();
 
@@ -24,14 +25,11 @@ export default class DBConnection {
     static createPool(query, keys = []) {
         return new Promise((resolve, reject) => {
             mysqlPool.query(query, keys, (error, results) => {
-                if (error) {
-                    Logger.danger('DBConnection: QUERY', error);
-                    reject({ status: 500, msg: ['Error on query'] });
-                }
-                else {
-                    Logger.info('DBConnection', results);
-                    resolve(results);
-                }              
+                let res = new DBResponse("DBConnection", query+keys, results, error);
+                if(error)
+                    res.status = 500;
+                res.logPrint();
+                resolve(res);            
             });      
 
         });

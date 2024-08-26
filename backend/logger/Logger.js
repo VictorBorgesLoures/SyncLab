@@ -1,4 +1,4 @@
-export default new class {
+    export default new class {
 
     _successColor = '\x1b[32m';
     _warningColor = '\x1b[33m';
@@ -31,6 +31,8 @@ export default new class {
     }
 
     logMessage(msg) {
-        console.log(msg)
+        let prod = process.env.PROD | false;
+        if(!prod) 
+            console.log(msg);
     }
 }

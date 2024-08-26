@@ -1,17 +1,16 @@
 import DBConnection from '../database/Connection.js';
 import Endereco from './Endereco.js';
-import userValidators from '../Validators/User.js';
+import userValidators from '../validators/User.js';
 import Logger from '../../logger/Logger.js';
 
 export default class User {
 
     //Retrieve user's data from database by id (can be the id, username, e-mail or cookie)
     constructor(data) {
-        for(let item in data) {
+        this.matricula = null;
+        for (let item in data) {
             this[item] = data[item];
         }
-        this.matriculas = null;
-        //...
     }
 
     //Fetch user data by id
@@ -23,15 +22,18 @@ export default class User {
                 let query = "select * from usuario where "
                 query += idType + "=?;";
 
-                DBConnection.createPool(query, [id]).then(data => {
-                    if (data.length > 0)
-                        resolve(new User(data[0]));
-                    else
-                        resolve(null);
-                })
+                DBConnection.createPool(query, [id])
+                    .then(resp => {
+                        if (resp.error) {
+                            resolve(null);
+                        } else if (resp.data.length > 0)
+                            resolve(new User(resp.data[0]));
+                        else
+                            resolve(null);
+                    })
                     .catch(e => {
                         Logger.danger('fetchUsuario', e);
-                        reject(e);
+                        resolve(null);
                     })
             } else {
                 resolve(null);
@@ -45,14 +47,16 @@ export default class User {
             let query = "select id from endereco where cep=?;";
             DBConnection.createPool(query, [cep])
                 .then(resp => {
-                    Logger.info('fetchEndereco', resp);
-                    if (resp.length > 0)
-                        resolve(new Endereco(resp[0]));
+                    if (resp.error) {
+                        resolve(null);
+                    } else if (resp.data.length > 0)
+                        resolve(new Endereco(data[0]));
                     else
-                        resolve(null)
+                        resolve(null);
                 })
                 .catch(e => {
                     Logger.danger('fetchEndereco', e);
+                    resolve(null);
                 });
         })
     }
@@ -60,15 +64,18 @@ export default class User {
     static fetchNames(name, matchAll = false) {
         return new Promise((resolve, reject) => {
             let query = "select nome from Usuario where nome like (";
-            if(matchAll) query+= "'%";
-            else query+="'";
+            if (matchAll) query += "'%";
+            else query += "'";
             query += name;
-            if(matchAll) query+= "%'";
-            else query+="'";
-            query+= ") limit 10;";
+            if (matchAll) query += "%'";
+            else query += "'";
+            query += ") limit 10;";
             DBConnection.createPool(query)
                 .then(resp => {
-                    resolve(resp);
+                    if (resp.error) {
+                        resolve([]);
+                    } else
+                        resolve(resp.data);
                 })
                 .catch(e => {
                     Logger.warning("fetchNames", e);
@@ -89,11 +96,11 @@ export default class User {
                         let keys = [endereco.rua, endereco.cep];
                         // get modified id form executed qury
                         let createEndResp = await DBConnection.createPool(query, keys);
-                        if (createEndResp && createEndResp.affectedRows == 1) {
+                        if (createEndResp.error == null && createEndResp.data.affectedRows == 1) {
                             Logger.info("Register", "Created endereco")
-                            endId = createEndResp.insertId;
+                            endId = createEndResp.data.insertId;
                         } else {
-                            resolve({status:500, msg: "FODEU"});
+                            resolve(false);
                         }
                     } else
                         endId = endDB.id;
@@ -105,11 +112,9 @@ export default class User {
                         let keys = [data.nome, data.username, data.senha, data.dataNasc, data.email, data.cpf, data.numero, data.complemento, endId];
                         DBConnection.createPool(query, keys)
                             .then(createUserResponse => {
-                                if (createUserResponse.affectedRows > 0) {
-                                    Logger.success('Register:', createUserResponse);
+                                if (createUserResponse.error == null && createUserResponse.data.affectedRows > 0) {
                                     resolve(true);
                                 } else {
-                                    Logger.warning("Register", "Usuário não foi inserido");
                                     resolve(false);
                                 }
                             })
@@ -133,7 +138,7 @@ export default class User {
 
     //Compare user password if password param
     comparePassword(password) {
-        if(userValidators.isValidPassword(password))
+        if (userValidators.isValidPassword(password))
             return this.senha == password;
         else return false;
     }
@@ -141,26 +146,51 @@ export default class User {
     //Return all user's "matriculas" as array
     getMatriculas() {
         return new Promise((resolve, reject) => {
-            if (this.matriculas != null)
-                resolve(this.matriculas);
-            let query = "select * from matricula where id=?";
+            let query = "select * from matricula where id=?;";
             DBConnection.createPool(query, [this.id])
-                .then(data => {
-                    Logger.info('getMatriculas', data);
-                    resolve(data);
+                .then(resp => {
+                    if(resp.error) {
+                        resolve([]);
+                    } else
+                        resolve(resp.data);
                 }).catch(e => {
                     Logger.danger('getMatriculas', e);
-                    reject({ status: 500, msg: ['Error on query'] });
+                    resolve([]);
                 })
         })
     }
 
-    reqMatricula(form) {
+    getReqMatriculas() {
+        return new Promise((resolve, reject) => {
+            let query = "select * from req_matricula where id=?;";
+            DBConnection.createPool(query, [this.id])
+                .then(resp => {
+                    if(resp.error) {
+                        resolve([]);
+                    } else
+                        resolve(resp.data);
+                }).catch(e => {
+                    Logger.danger('getReqMatriculas', e);
+                    resolve([]);
+                })
+        })
+    }
+
+    setReqMatricula(form) {
         return new Promise(resolve, reject => {
-            if (validators.isValidReqMatricula(form)) {
-                //exec query on db 
-                //essa query deve derificar se já existe uma req com o mesmo número de matrícula e com status de "Em análise"   
-                resolve(true);
+            if (userValidators.isValidReqMatricula(form)) {
+                //essa query deve ter um trigger: verificar se já existe uma req com o mesmo número de matrícula e com status de "Em análise" ou "Ativo" (não inserir caso encontre)
+                let query = "insert into req_matricula (idUsuario, matricula, tipo) values(?,?,?);"; 
+                let keys = [this.id, form.matricula, form.tipo]
+                DBConnection.createPool(query, keys)
+                    .then(resp => {
+                        if(resp.error == null && resp.data.affectedRows > 0) resolve(true);
+                        else resolve(false);                        
+                    })
+                    .catch(e => {
+                        Logger.danger("reqMatricula", e);
+                        resolve(false);
+                    })
             } else {
                 resolve(false);
             }
@@ -170,27 +200,6 @@ export default class User {
     //Return user's address list as array
     getEndereco() {
         return this.endereco;
-    }
-
-    //Return all user's reservations as array
-    getReservas() {
-        //exec sql query
-    }
-
-    //Try to set reserva on lab - every reservation will be for 2 hours
-    setReserva(idLab, data) {
-        // valid date - use datetimeoffset sql format, minutes and seconds will always be 00
-        // exec query
-        // return true or false as the query valid/invalid response
-    }
-
-    //Retrive user's Requisitions
-    getRequisicoes() {
-    }
-
-    //Try to create a request
-    setRequisicoes() {
-
     }
 
 }

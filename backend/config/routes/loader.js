@@ -15,17 +15,17 @@ export default app => {
     //Load discente routes
     let discenteRouter = express.Router();
     discenteLoader(discenteRouter);
-    apiRoutes.use('auth/discente', discenteRouter);
+    apiRoutes.use('/discente', discenteRouter);
 
     //Load docente routes
     let docenteRouter = express.Router();
     docenteLoader(docenteRouter);
-    apiRoutes.use('auth/docente', docenteRouter);
+    apiRoutes.use('/docente', docenteRouter);
 
     //Load admin routes
     let adminRouter = express.Router();
     adminLoader(adminRouter);
-    apiRoutes.use('auth/admin', adminRouter);
+    apiRoutes.use('/admin', adminRouter);
 
     //load synclab routes
     let synclabRouter = express.Router();
