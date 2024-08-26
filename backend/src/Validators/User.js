@@ -7,5 +7,8 @@ export default {
     isValidPassword: data => {
         return Helpers.isPassword(data);
     },
+    isValidName: data => {
+        return Helpers.isName(data);
+    },
     registerForm: (data, endereco) => []
 }

@@ -1,7 +1,7 @@
 import Logger from "../../../logger/Logger.js";
 
 function auth(req, res, next) {
-    if (/^\/api/.exec(req._parsedUrl.pathname)) {
+    if (/^\/api\/auth/.exec(req._parsedUrl.pathname)) {
         if (req.session.user) {
             Logger.info("AUTH", "Valid User");
             next();

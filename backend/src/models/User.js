@@ -1,6 +1,6 @@
 import DBConnection from '../database/Connection.js';
 import Endereco from './Endereco.js';
-import userValidators from '../validators/User.js';
+import userValidators from '../Validators/User.js';
 import Logger from '../../logger/Logger.js';
 
 export default class User {
@@ -55,6 +55,26 @@ export default class User {
                     Logger.danger('fetchEndereco', e);
                 });
         })
+    }
+
+    static fetchNames(name, matchAll = false) {
+        return new Promise((resolve, reject) => {
+            let query = "select nome from Usuario where nome like (";
+            if(matchAll) query+= "'%";
+            else query+="'";
+            query += name;
+            if(matchAll) query+= "%'";
+            else query+="'";
+            query+= ") limit 10;";
+            DBConnection.createPool(query)
+                .then(resp => {
+                    resolve(resp);
+                })
+                .catch(e => {
+                    Logger.warning("fetchNames", e);
+                    resolve([]);
+                })
+        });
     }
 
     //Create a new User on Database with the params

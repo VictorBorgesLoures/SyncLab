@@ -16,11 +16,7 @@ class Login extends Component {
             password: ""
         }
     }
-
-    componentDidMout() {
-        console.log("component mount");
-    }
-
+    
     handleSubmit = (event) => {
         event.preventDefault();
         console.log("aqui");
