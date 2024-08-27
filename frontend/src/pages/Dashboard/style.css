@@ -1,5 +1,9 @@
 @import url('../../styles/variables.css');
 
+#root {
+    padding:0;
+}
+
 .dashboard-container {
     display:flex;
     flex-direction: row;
