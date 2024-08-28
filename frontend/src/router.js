@@ -5,8 +5,6 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MatriculaLogin from './pages/MatriculaLogin';
 
-import ProtectedRoute from "./ProtectedRoute";
-
 const router = createBrowserRouter(
     [
         {
@@ -22,18 +20,12 @@ const router = createBrowserRouter(
                     element: <Registro />
                 },
                 {
-                    path: "*",
-                    element: <ProtectedRoute></ProtectedRoute>,
-                    children: [
-                        {
-                            path: "dashboard",
-                            element: <Dashboard />
-                        },
-                        {
-                            path: "matricula",
-                            element: <MatriculaLogin />
-                        }
-                    ]
+                    path: "dashboard",
+                    element: <Dashboard />
+                },
+                {
+                    path: "matricula",
+                    element: <MatriculaLogin />
                 }
             ],
         },
