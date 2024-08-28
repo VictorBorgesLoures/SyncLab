@@ -2,7 +2,7 @@ import React from 'react';
 import fetchApi from './fetch/fetch-api';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
-function App(props) {
+function App({ children }) {
   const navigate = useNavigate();
   const locate = useLocation();
   console.log(locate);
@@ -10,11 +10,9 @@ function App(props) {
     console.log(res);
     res.json().then(r => {
       if (r.redirect && locate.pathname != r.redirect) navigate(r.redirect);
-      else
-        return <Outlet></Outlet>
     });
-    return <Outlet ></Outlet>
   }).catch(e => navigate('/'));
+  return <Outlet></Outlet>
 }
 
 export default App;

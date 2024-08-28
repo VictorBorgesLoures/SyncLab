@@ -25,7 +25,7 @@ export default class MatriculaLoign extends Component {
         fetchapi('/api/matriculas', 'post')
             .then(resp => {
                 if(resp.status === 200) {
-                    this.setState({matriculas: resp.data});
+                    resp.json(r => this.setState({matriculas: r.data}));                    
                 }
             })
             .catch(e => {
