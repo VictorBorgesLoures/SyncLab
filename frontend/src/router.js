@@ -4,7 +4,7 @@ import Registro from './pages/Registro';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MatriculaLogin from './pages/MatriculaLogin';
-import RequisitarMat from './pages/MatriculaLogin/Requisitar'
+import RequisitarMat from './pages/Requisitar'
 
 const router = createBrowserRouter(
     [
@@ -27,13 +27,11 @@ const router = createBrowserRouter(
                 {
                     path: "matricula",
                     element: <MatriculaLogin />,
-                    children: [
-                        {
-                            path: "requisitar",
-                            element: <RequisitarMat />,
+                },
+                {
+                    path: "matricula/requisitar",
+                    element: <RequisitarMat />,
 
-                        }
-                    ]
                 }
             ],
         },
