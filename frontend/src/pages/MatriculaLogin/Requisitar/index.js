@@ -77,12 +77,7 @@ export default class MatriculaLogin extends Component {
                 <Header />
                 <div className="matricula-center-items">
                     <div className='matricula-container'>
-                        <h1>Matrícula</h1>
-                        <div className="matricula-box">
-                            {this.renderMatriculas()}
-                        </div>
-                        <button type="button" className='matricula-entrar-btn'>Entrar</button>
-                        <button type="button" className='matricula-solicitar-btn'>Solicitar Matrícula</button>
+                        <h1>Requisitar Matrícula</h1>
                     </div>
                 </div>
                 <Footer />
