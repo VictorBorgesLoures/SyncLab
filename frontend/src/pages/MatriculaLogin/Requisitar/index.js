@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import fetchapi from '../../fetch/fetch-api';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
+import fetchapi from '../../../fetch/fetch-api';
+import Header from '../../../components/header';
+import Footer from '../../../components/footer';
 import './style.css';
 
 let matTipos = {

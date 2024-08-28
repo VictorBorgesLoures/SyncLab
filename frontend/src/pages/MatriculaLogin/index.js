@@ -3,6 +3,7 @@ import fetchapi from '../../fetch/fetch-api';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 let matTipos = {
     1: 'Admin',
@@ -82,7 +83,10 @@ export default class MatriculaLogin extends Component {
                             {this.renderMatriculas()}
                         </div>
                         <button type="button" className='matricula-entrar-btn'>Entrar</button>
-                        <button type="button" className='matricula-solicitar-btn'>Solicitar Matrícula</button>
+                        <button type="button"  className='matricula-solicitar-btn'>
+                            <Link to="./requisitar" className='matricula-solicitar-btn'>Solicitar Matrícula</Link>
+                        </button>
+                        
                     </div>
                 </div>
                 <Footer />
