@@ -68,7 +68,7 @@ h1 {
     margin-bottom: 15px;
 }
 
-.matricula-atual-btn {
+.matricula-btn.active {
     margin-left: 15px;
     margin-right: 15px;
     margin-bottom:10px;
@@ -84,12 +84,11 @@ h1 {
     width:auto;
     height:40px;
 }
-
-.matricula-atual-btn:hover {
+.matricula-btn.active:hover {
     background-color: var(--lightpurple);
 }
 
-.matricula-outra-btn {
+.matricula-btn {
     margin-left: 15px;
     margin-right: 15px;
     margin-bottom:10px;
@@ -107,10 +106,15 @@ h1 {
     height:40px;
 }
 
-.matricula-outra-btn:hover {
-    color: var(--lightpurple);
+.matricula-btn:hover {
     border-color: var(--lightpurple);
 }
+
+.matricula-btn.disabled {
+    background-color: gray;
+    color: white;
+}
+
 
 .matricula-list {
     display: flex;

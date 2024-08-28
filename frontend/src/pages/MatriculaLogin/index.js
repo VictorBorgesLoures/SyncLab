@@ -10,22 +10,38 @@ let matTipos = {
     3: 'Dicente'
 }
 
-export default class MatriculaLoign extends Component {
+export default class MatriculaLogin extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            matricula: null,
-            matriculas: []
+            matricula: 123321,
+            matriculas: [ {
+                matricula: 123321,
+                tipo: 1,
+                status: "Ativo"
+            }, {
+                matricula: 33332,
+                tipo: 2,
+                status: "Ativo"
+            }, {
+                matricula: 12313,
+                tipo: 3,
+                status: "Desativado"
+            }]
         }
-    
+
     }
 
     componentDidMount() {
         fetchapi('/api/matriculas', 'post')
             .then(resp => {
-                if(resp.status === 200) {
-                    resp.json(r => this.setState({matriculas: r.data}));                    
+                if (resp.status == 200) {
+                    console.log(resp);
+                    resp.json().then(r => {
+                        console.log(r.data);
+                        this.setState({ matriculas: r.data })
+                    });
                 }
             })
             .catch(e => {
@@ -35,15 +51,15 @@ export default class MatriculaLoign extends Component {
 
     handleSelectMatricula(e, mat) {
         e.preventDefault();
-        if(mat.status == 'Ativo')
-            this.setState({matricula:mat.matricula});
+        if (mat.status == 'Ativo')
+            this.setState({ matricula: mat.matricula });
     }
 
     setDivClassMatricula(mat) {
-        let className = 'matricula-input';
-        if(mat.matricula === this.matricula)
-            className+= ' active';
-        if(mat.status == 'Desativado')
+        let className = 'matricula-btn';
+        if (mat.matricula === this.state.matricula)
+            className += ' active';
+        if (mat.status == 'Desativado')
             className += ' disabled';
         return className;
     }
@@ -55,10 +71,9 @@ export default class MatriculaLoign extends Component {
     renderMatriculas() {
         return this.state.matriculas.map(mat => {
             return (
-                <div className={this.setDivClassMatricula(mat)} key={mat.matricula}  id={mat.matricula} onClick={e => this.handleSelectMatricula(e, mat)}>
-                    <p>{mat.matricula}</p>
-                    <p>{this.renderMatTipo(mat.tipo)}</p>
-                </div>
+                <button type="button" className={this.setDivClassMatricula(mat)} key={mat.matricula} id={mat.matricula} onClick={e => this.handleSelectMatricula(e, mat)}>
+                    {mat.matricula} - {this.renderMatTipo(mat.tipo)}
+                </button>
             );
         });
     }
@@ -70,14 +85,8 @@ export default class MatriculaLoign extends Component {
                 <div className="matricula-center-items">
                     <div className='matricula-container'>
                         <h1>Matrícula</h1>
-                        {this.renderMatriculas()}
                         <div className="matricula-box">
-                            <button type="button" className='matricula-atual-btn'>Matricula Atual</button>
-                            <div className='matricula-list'>
-                                <button type="button" className='matricula-outra-btn'>Outra Matricula</button>
-                                <button type="button" className='matricula-outra-btn'>Outra Matricula</button>
-                                <button type="button" className='matricula-outra-btn'>Outra Matricula</button>
-                            </div>
+                            {this.renderMatriculas()}
                         </div>
                         <button type="button" className='matricula-entrar-btn'>Entrar</button>
                         <button type="button" className='matricula-solicitar-btn'>Solicitar Matrícula</button>
