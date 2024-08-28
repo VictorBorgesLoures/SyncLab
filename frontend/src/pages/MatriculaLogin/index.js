@@ -51,7 +51,7 @@ export default class MatriculaLoign extends Component {
     }
 
     renderMatriculas() {
-        return this.matriculas.map(mat => {
+        return this.state.matriculas.map(mat => {
             return (
                 <div className={this.setDivClassMatricula(mat)} key={mat.matricula}  id={mat.matricula} onClick={e => this.handleSelectMatricula(e, mat)}>
                     <p>{mat.matricula}</p>
