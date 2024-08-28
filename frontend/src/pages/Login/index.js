@@ -1,5 +1,6 @@
 import React, {useEffect, componentDidMout, Component} from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import withRouter from '../../components/withRouter';
 import './style.css';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
@@ -8,14 +9,12 @@ import fetchAPI from '../../fetch/fetch-api'
 class Login extends Component {
 
     constructor(props) {
-        console.log(props); 
         super(props);
 
         this.state = {
             email: "",
             password: ""
         }
-        console.log(props); 
 
     }
     
@@ -28,8 +27,7 @@ class Login extends Component {
                 console.log(res);
                 res.json().then(r => {
                     if(r.status == 200) {
-                        console.log("NAVIGATE!");
-                        console.log(this);
+                        console.log(this.props.navigate('/matricula'));
                     }
                 });
             }).catch(e => {
@@ -80,4 +78,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);

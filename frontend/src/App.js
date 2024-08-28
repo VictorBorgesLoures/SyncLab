@@ -1,21 +1,20 @@
 import React from 'react';
 import fetchApi from './fetch/fetch-api';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
-function App({ children }) {
-
+function App(props) {
   const navigate = useNavigate();
-
-  fetchApi('/api/auth',"post").then(res => {
+  const locate = useLocation();
+  console.log(locate);
+  fetchApi('/auth', "post").then(res => {
     console.log(res);
-    // res.json().then(r => navigate(r.redirect, { replace: true }));
-  }).catch(e => console.log(e));
-
-  return (
-    <div>
-      {children}
-    </div>
-  );
+    res.json().then(r => {
+      if (r.redirect && locate.pathname != r.redirect) navigate(r.redirect);
+      else
+        return <Outlet></Outlet>
+    });
+    return <Outlet ></Outlet>
+  }).catch(e => navigate('/'));
 }
 
 export default App;
