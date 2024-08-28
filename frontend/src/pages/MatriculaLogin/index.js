@@ -65,7 +65,7 @@ export default class MatriculaLoign extends Component {
 
     render() {
         return (
-            <>
+            <div>
                 <Header />
                 <div className="matricula-center-items">
                     <div className='matricula-container'>
@@ -84,7 +84,7 @@ export default class MatriculaLoign extends Component {
                     </div>
                 </div>
                 <Footer />
-            </>
+            </div>
         )
     }
 
