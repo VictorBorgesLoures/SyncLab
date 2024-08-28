@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import Painel from '../../components/painel';
+import UserHeader from '../../components/userHeader';
+import withRouter from '../../components/withRouter';
 
 function Dashboard() {
     useEffect(() => {
@@ -14,6 +16,7 @@ function Dashboard() {
                     <Painel></Painel>
                 </div>
                 <div className="dashboard-content">
+                    <UserHeader></UserHeader>
                     Conteudo
                 </div>
             </div>
@@ -21,4 +24,4 @@ function Dashboard() {
     )
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
