@@ -77,7 +77,23 @@ export default class MatriculaLogin extends Component {
                 <Header />
                 <div className="matricula-center-items">
                     <div className='matricula-container'>
-                        <h1>Requisitar Matrícula</h1>
+                        <h1>Solicitação de Matrícula</h1>
+                        <form>
+                            <p className="label">Número de Matricula:</p>
+                            <input
+                            placeholder='Digite sua matrícula'
+                            type="number"
+                            id="matricula"
+                            required
+                            />
+                            <p className="label">Tipo de Vínculo:</p>
+                            <select name="select-vinculo">
+                            <option value="opcao1">Discente</option>
+                            <option value="opcao2">Docente</option>
+                            <option value="opcao3">Administrador</option>
+                            </select>
+                            <button className="submit-requisitar-btn">Solicitar</button>
+                        </form>
                     </div>
                 </div>
                 <Footer />
