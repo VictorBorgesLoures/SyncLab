@@ -1,4 +1,5 @@
 import Logger from "../../../logger/Logger.js"
+import User from '../../../src/models/User.js'
 
 export default app => {
 

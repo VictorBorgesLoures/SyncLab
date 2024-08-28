@@ -1,6 +1,5 @@
 import React, {useEffect, componentDidMout, Component} from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import './style.css';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
@@ -9,22 +8,30 @@ import fetchAPI from '../../fetch/fetch-api'
 class Login extends Component {
 
     constructor(props) {
+        console.log(props); 
         super(props);
 
         this.state = {
             email: "",
             password: ""
         }
+        console.log(props); 
+
     }
     
-    handleSubmit = (event) => {
+    handleSubmit(event) {
         event.preventDefault();
         console.log("aqui");
         // Enviar email e senha para o servidor
         fetchAPI("/login", "post", { id: 1, password: 23041507 })
             .then(res => {
                 console.log(res);
-                res.json().then(r => console.log(r));
+                res.json().then(r => {
+                    if(r.status == 200) {
+                        console.log("NAVIGATE!");
+                        console.log(this);
+                    }
+                });
             }).catch(e => {
                 console.log(e)
             })
@@ -37,7 +44,7 @@ class Login extends Component {
         <>
                 <Header showBtn={false} />
                 <div className="container">
-                    <form className="login-form" onSubmit={this.handleSubmit}>
+                    <form className="login-form" onSubmit={e=> this.handleSubmit(e)}>
                         <h1 className='logintxt'>Login</h1>
                         <div className="form-group">
                             <p className="label" htmlFor="email">Email:</p>
