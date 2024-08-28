@@ -146,7 +146,7 @@ export default class User {
     //Return all user's "matriculas" as array
     getMatriculas() {
         return new Promise((resolve, reject) => {
-            let query = "select * from matricula where id=?;";
+            let query = "select * from matricula where idUsuario=?;";
             DBConnection.createPool(query, [this.id])
                 .then(resp => {
                     if(resp.error) {
