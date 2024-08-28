@@ -1,2 +1,118 @@
 @import url('../../styles/variables.css');
 
+.matricula-center-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+h1 {
+    color: var(--purple);
+}
+
+.matricula-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:450px;
+    vertical-align: middle;
+    height: 100%;
+}
+.matricula-entrar-btn {
+    padding: 10px 20px;
+    background-color: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    width:100%;
+    height:50px;
+}
+
+.matricula-entrar-btn:hover {
+    background-color: var(--lightpurple);
+}
+
+.matricula-solicitar-btn {
+    margin-top:15px;
+    padding: 10px 20px;
+    background-color: white;
+    color: var(--purple);
+    border-color: var(--purple);
+    border-width: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    width:100%;
+    height:50px;
+}
+
+.matricula-solicitar-btn:hover {
+    border-color: var(--lightpurple);
+    color: var(--lightpurple);
+}
+
+.matricula-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--lightgray);
+    margin-bottom: 15px;
+}
+
+.matricula-atual-btn {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom:10px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    width:auto;
+    height:40px;
+}
+
+.matricula-atual-btn:hover {
+    background-color: var(--lightpurple);
+}
+
+.matricula-outra-btn {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom:10px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    color: var(--purple);
+    background-color: white;
+    border-color: var(--purple);
+    border-width: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    width:auto;
+    height:40px;
+}
+
+.matricula-outra-btn:hover {
+    color: var(--lightpurple);
+    border-color: var(--lightpurple);
+}
+
+.matricula-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

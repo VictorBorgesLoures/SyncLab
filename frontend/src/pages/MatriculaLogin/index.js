@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import fetchapi from '../../fetch/fetch-api';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 import './style.css';
 
 let matTipos = {
@@ -64,12 +66,24 @@ export default class MatriculaLoign extends Component {
     render() {
         return (
             <>
-                <h1>Selecionar Matrícula</h1>
-                <div className='matricula-form'>
-                    {this.renderMatriculas()}
-                    <button type="button" className='btn-submit'>Entrar</button>
-                    <button type="button" className='btn-submit'>Requisitar Matrícula</button>
+                <Header />
+                <div className="matricula-center-items">
+                    <div className='matricula-container'>
+                        <h1>Matrícula</h1>
+                        {this.renderMatriculas()}
+                        <div className="matricula-box">
+                            <button type="button" className='matricula-atual-btn'>Matricula Atual</button>
+                            <div className='matricula-list'>
+                                <button type="button" className='matricula-outra-btn'>Outra Matricula</button>
+                                <button type="button" className='matricula-outra-btn'>Outra Matricula</button>
+                                <button type="button" className='matricula-outra-btn'>Outra Matricula</button>
+                            </div>
+                        </div>
+                        <button type="button" className='matricula-entrar-btn'>Entrar</button>
+                        <button type="button" className='matricula-solicitar-btn'>Solicitar Matrícula</button>
+                    </div>
                 </div>
+                <Footer />
             </>
         )
     }
