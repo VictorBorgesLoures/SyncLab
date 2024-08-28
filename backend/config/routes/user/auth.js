@@ -1,6 +1,6 @@
 import Logger from "../../../logger/Logger.js";
 
-function auth(req, res, next) {
+function apiAuth(req, res, next) {
     if (/^\/api/.exec(req._parsedUrl.pathname)) {
         if (req.session.user) {
             Logger.info("AUTH", "Valid User");
@@ -18,15 +18,15 @@ function auth(req, res, next) {
 export default app => {
     Logger.info("ROUTES", "LOADING AUTH");
 
-    app.use(auth);
+    app.use(apiAuth);
 
     app.post('/auth', (req, res, next) => {
         Logger.info("API/AUTH", "AUTH CALL");
         if (req.session.user) {
             Logger.info("API/AUTH", "VALID USER");
             if (req.session.user.matricula) {
-                Logger.info("API/AUTH", "redirect dashbard");
-                res.status(301).json({ status: 301, msg: "Sessão Válida" });
+                Logger.info("API/AUTH", "Sess]ao válida");
+                res.status(200).json({ status: 200, msg: "Sessão Válida" });
             }
             else {
                 Logger.info("API/AUTH", "redirect matricula");
