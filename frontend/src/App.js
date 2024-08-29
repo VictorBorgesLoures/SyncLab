@@ -10,7 +10,8 @@ function App({ children }) {
     .then(res => {
       console.log(res);
       res.json().then(r => {
-        if (r.redirect && locate.pathname != r.redirect && (locate.pathname != "/matricula/requisitar" && r.redirect != '/matricula')) navigate(r.redirect);
+        console.log(r);
+        if (r.redirect && locate.pathname != r.redirect && r.redirect == '/login') navigate(r.redirect);
       });
     }).catch(e => navigate('/'));
   return <Outlet></Outlet>

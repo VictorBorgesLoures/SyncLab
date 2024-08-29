@@ -180,8 +180,11 @@ export default class User {
         return new Promise(resolve, reject => {
             if (userValidators.isValidReqMatricula(form)) {
                 //essa query deve ter um trigger: verificar se já existe uma req com o mesmo número de matrícula e com status de "Em análise" ou "Ativo" (não inserir caso encontre)
-                let query = "insert into req_matricula (idUsuario, matricula, tipo) values(?,?,?);"; 
+                let query = "select * from req_matricula where idUsuario=?;"; 
                 let keys = [this.id, form.matricula, form.tipo]
+
+                query = "insert into req_matricula (idUsuario, matricula, tipo) values(?,?,?);"; 
+                keys = [this.id, form.matricula, form.tipo]
                 DBConnection.createPool(query, keys)
                     .then(resp => {
                         if(resp.error == null && resp.data.affectedRows > 0) resolve(true);
