@@ -15,60 +15,25 @@ export default class MatriculaLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            matricula: null,
-            matriculas: []
+            matricula: "",
+            tipo: 1
         }
-
     }
 
-    componentDidMount() {
-        fetchapi('/api/matriculas', 'post')
-            .then(resp => {
-                if (resp.status == 200) {
-                    resp.json().then(r => {
-                        this.setState({ matriculas: r.data })
-                    });
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            })
-    }
-
-    handleSelectMatricula(e, mat) {
-        e.preventDefault();
-        if (mat.status == 'Ativo')
-            this.setState({ matricula: mat.matricula });
-    }
-
-    setDivClassMatricula(mat) {
-        let className = 'matricula-btn';
-        if (mat.matricula === this.state.matricula)
-            className += ' active';
-        if (mat.status == 'Desativado')
-            className += ' disabled';
-        return className;
-    }
-
-    renderMatTipo(tipo) {
-        return matTipos[tipo];
-    }
-
-    renderMatriculas() {
-        if (this.state.matriculas.length > 0)
-            return this.state.matriculas.map(mat => {
-                return (
-                    <button type="button" className={this.setDivClassMatricula(mat)} key={mat.matricula} id={mat.matricula} onClick={e => this.handleSelectMatricula(e, mat)}>
-                        {mat.matricula} - {this.renderMatTipo(mat.tipo)}
-                    </button>
-                );
-            });
-        else
-            return (
-                <button type="button" className="matricula-btn disabled">
-                    Não há matrícula
-                </button>
+    renderMapTipos() {
+        let render = []
+        Object.keys(matTipos).forEach(t => {
+            render.push(
+                <option key={'mat-tipo-'+t} value={t}>{matTipos[t]}</option>
             )
+        })
+        return render;
+    }
+
+    handleSubmitMatricula(e) {
+        e.preventDefault();
+        fetchapi('/api/matricula/registrar', 'post', this.state)
+            .then(r => console.log(r));
     }
 
     render() {
@@ -78,19 +43,19 @@ export default class MatriculaLogin extends Component {
                 <div className="matricula-center-items">
                     <div className='matricula-container'>
                         <h1>Solicitação de Matrícula</h1>
-                        <form>
+                        <form onSubmit={e => this.handleSubmitMatricula(e)}>
                             <p className="label">Número de Matricula:</p>
                             <input
-                            placeholder='Digite sua matrícula'
-                            type="number"
-                            id="matricula"
-                            required
+                                placeholder='Digite sua matrícula'
+                                type="number"
+                                id="matricula"
+                                value={this.state.matricula}
+                                onChange={e=> /\d+/.exec(e.target.value) ? this.setState({matricula: e.target.value}) : ''}
+                                required
                             />
                             <p className="label">Tipo de Vínculo:</p>
-                            <select name="select-vinculo">
-                            <option value="opcao1">Discente</option>
-                            <option value="opcao2">Docente</option>
-                            <option value="opcao3">Administrador</option>
+                            <select defaultValue={1} name="select-vinculo" onChange={ e=> this.setState({tipo: parseInt(e.target.value)})}>
+                                {this.renderMapTipos()}
                             </select>
                             <button className="submit-requisitar-btn">Solicitar</button>
                         </form>

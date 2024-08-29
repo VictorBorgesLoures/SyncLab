@@ -50,6 +50,7 @@ export default app => {
 
     app.post('/api/matricula/registrar', (req, res, next) => {
         let matriculaForm = req.body;
+        let user = new User(req.session.user);
         user.setReqMatricula(matriculaForm)
         .then(data => {
             if(data.affectedrows == 1) {
