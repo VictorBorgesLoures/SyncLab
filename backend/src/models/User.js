@@ -13,6 +13,18 @@ export default class User {
         }
     }
 
+    minified() {
+        return {
+            name: this.name,
+            username: this.username,
+            email: this.email,
+            matricula: {
+                tipo: this.matricula.tipo,
+                matricula: this.matricula.matricula
+            }
+        }
+    }
+
     //Fetch user data by id
     static fetchUsuario(id) {
         return new Promise((resolve, reject) => {
@@ -149,7 +161,7 @@ export default class User {
             let query = "select * from matricula where idUsuario=?;";
             DBConnection.createPool(query, [this.id])
                 .then(resp => {
-                    if(resp.error) {
+                    if (resp.error) {
                         resolve([]);
                     } else
                         resolve(resp.data);
@@ -160,12 +172,35 @@ export default class User {
         })
     }
 
+    hasMatricula(matricula) {
+        return new Promise((resolve, reject) => {
+            if (userValidators.isValidMatricula(matricula)) {
+                let query = "select * from matricula where idUsuario=? and matricula=?;"
+                let keys = [this.id, matricula];
+                DBConnection.createPool(query, keys)
+                    .then(resp => {
+                        if(resp.error == null) {
+                            if(resp.data.length > 0) resolve(resp.data[0]);
+                            else resolve(false);
+                        } else resolve(false)
+                    })
+                    .catch(e => {
+                        Logger.info('hasMatricula', e);
+                        resolve(false);
+                    })
+
+            } else {
+                resolve(false);
+            }
+        })
+    }
+
     getReqMatriculas() {
         return new Promise((resolve, reject) => {
-            let query = "select * from req_matricula where id=?;";
+            let query = "select * from req_matricula where idUsuario=? and status='Em andamento';";
             DBConnection.createPool(query, [this.id])
                 .then(resp => {
-                    if(resp.error) {
+                    if (resp.error) {
                         resolve([]);
                     } else
                         resolve(resp.data);
@@ -177,23 +212,40 @@ export default class User {
     }
 
     setReqMatricula(form) {
-        return new Promise(resolve, reject => {
+        return new Promise((resolve, reject) => {
             if (userValidators.isValidReqMatricula(form)) {
-                //essa query deve ter um trigger: verificar se já existe uma req com o mesmo número de matrícula e com status de "Em análise" ou "Ativo" (não inserir caso encontre)
-                let query = "select * from req_matricula where idUsuario=?;"; 
-                let keys = [this.id, form.matricula, form.tipo]
-
-                query = "insert into req_matricula (idUsuario, matricula, tipo) values(?,?,?);"; 
-                keys = [this.id, form.matricula, form.tipo]
+                //essa query deve ter um trigger: verificar se já existe uma req com o mesmo número de matrícula e com status de "Em andamento" ou "Ativo" (não inserir caso encontre)
+                let query = "select * from req_matricula where idUsuario=? and matricula=? and (status='Ativo' or status='Em andamento');";
+                let keys = [this.id, form.matricula]
                 DBConnection.createPool(query, keys)
                     .then(resp => {
-                        if(resp.error == null && resp.data.affectedRows > 0) resolve(true);
-                        else resolve(false);                        
+                        Logger.info('setReqMatricula', resp);
+                        if (resp.error == null) {
+                            if (resp.data.length > 0) {
+                                resolve(false)
+                            } else {
+                                query = "insert into req_matricula (idUsuario, matricula, tipo) values(?,?,?);";
+                                keys = [this.id, form.matricula, form.tipo]
+                                DBConnection.createPool(query, keys)
+                                    .then(resp => {
+                                        if (resp.error == null && resp.data.affectedRows > 0) resolve(true);
+                                        else resolve(false);
+                                    })
+                                    .catch(e => {
+                                        Logger.danger("reqMatricula", e);
+                                        resolve(false);
+                                    })
+                            }
+
+                        } else {
+                            resolve(false);
+                        }
                     })
                     .catch(e => {
                         Logger.danger("reqMatricula", e);
                         resolve(false);
                     })
+
             } else {
                 resolve(false);
             }

@@ -2,7 +2,8 @@ import { createBrowserRouter, useNavigate } from "react-router-dom";
 import App from './App';
 import Registro from './pages/Registro';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import SyncLab from './pages/SyncLab';
+import Dashboard from './pages/SyncLab/Dashboard';
 import MatriculaLogin from './pages/MatriculaLogin';
 import RequisitarMat from './pages/Requisitar'
 
@@ -21,10 +22,6 @@ const router = createBrowserRouter(
                     element: <Registro />
                 },
                 {
-                    path: "dashboard",
-                    element: <Dashboard />
-                },
-                {
                     path: "matricula",
                     element: <MatriculaLogin />,
                 },
@@ -32,6 +29,18 @@ const router = createBrowserRouter(
                     path: "matricula/requisitar",
                     element: <RequisitarMat />,
 
+                },
+                {
+                    path: "synclab",
+                    element: <SyncLab></SyncLab>,
+                    children: [
+
+                        {
+                            path: "dashboard",
+                            element: <Dashboard />
+                        }
+
+                    ]
                 }
             ],
         },

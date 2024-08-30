@@ -13,5 +13,8 @@ export default {
     isValidReqMatricula: data => {
         return Helpers.isMatricula(data.matricula) && Helpers.isMatriculaType(data.tipo);
     },
+    isValidMatricula: data=> {
+        return Helpers.isMatricula(data);
+    },
     registerForm: (data, endereco) => []
 }

@@ -27,7 +27,7 @@ class Login extends Component {
                 console.log(res);
                 res.json().then(r => {
                     if(r.status == 200) {
-                        console.log(this.props.navigate('/matricula'));
+                        this.props.navigate('/matricula');
                     }
                 });
             }).catch(e => {

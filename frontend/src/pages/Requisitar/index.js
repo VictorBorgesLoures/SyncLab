@@ -1,8 +1,10 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import fetchapi from '../../fetch/fetch-api';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import './style.css';
+import fetchApi from '../../fetch/fetch-api';
 
 let matTipos = {
     1: 'Admin',
@@ -10,30 +12,62 @@ let matTipos = {
     3: 'Dicente'
 }
 
-export default class MatriculaLogin extends Component {
+export default class RequisitarMatricula extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             matricula: "",
-            tipo: 1
+            tipo: 1,
+            reqMatriculas: []
         }
+    }
+
+    componentDidMount() {
+        this.fetchReqMatriculas();
+    }
+
+    fetchReqMatriculas() {
+        fetchApi('/api/reqMatriculas', 'post')
+            .then(r => {
+                r.json().then(m => {
+                    console.log(m);
+                    this.setState({ reqMatriculas: m.data })
+                });
+            })
+            .catch(e => console.log(e));
     }
 
     renderMapTipos() {
         let render = []
         Object.keys(matTipos).forEach(t => {
             render.push(
-                <option key={'mat-tipo-'+t} value={t}>{matTipos[t]}</option>
+                <option key={'mat-tipo-' + t} value={t}>{matTipos[t]}</option>
             )
         })
         return render;
     }
 
+    renderMatTipo(tipo) {
+        return matTipos[tipo];
+    }
+
+    renderOpenRequisitions() {
+        return this.state.reqMatriculas.map(mat => {
+            return (<button type="button" className='matricula-btn disabled' key={mat.matricula} id={mat.matricula} disabled>
+                {mat.matricula} - {this.renderMatTipo(mat.tipo)}
+            </button>
+            )
+        })
+    }
+
     handleSubmitMatricula(e) {
         e.preventDefault();
-        fetchapi('/api/matricula/registrar', 'post', this.state)
-            .then(r => console.log(r));
+        fetchapi('/api/matricula/registrar', 'post', {matricula: this.state.matricula, tipo: this.state.tipo})
+            .then(r => r.json().then(re => {
+                this.setState({...this.state, matricula: "", tipo:1});
+                this.fetchReqMatriculas();
+            }));
     }
 
     render() {
@@ -50,15 +84,22 @@ export default class MatriculaLogin extends Component {
                                 type="number"
                                 id="matricula"
                                 value={this.state.matricula}
-                                onChange={e=> /\d+/.exec(e.target.value) ? this.setState({matricula: e.target.value}) : ''}
+                                onChange={e => /\d+/.exec(e.target.value) ? this.setState({ matricula: e.target.value }) : ''}
                                 required
                             />
                             <p className="label">Tipo de Vínculo:</p>
-                            <select defaultValue={1} name="select-vinculo" onChange={ e=> this.setState({tipo: parseInt(e.target.value)})}>
+                            <select  name="select-vinculo" value={this.state.tipo} onChange={e => this.setState({ tipo: parseInt(e.target.value) })}>
                                 {this.renderMapTipos()}
                             </select>
                             <button className="submit-requisitar-btn">Solicitar</button>
+                            <Link to="/matricula"><button className="submit-requisitar-btn">Voltar</button></Link>
                         </form>
+                    </div>
+                    <div className='matricula-container'>
+                        <h2>Requisições em aberto</h2>
+                        <div className='matricula-box'>
+                            {this.renderOpenRequisitions()}
+                        </div>
                     </div>
                 </div>
                 <Footer />

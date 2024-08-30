@@ -1,9 +1,10 @@
 import { Component } from 'react';
-import fetchapi from '../../fetch/fetch-api';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import './style.css';
 import { Link } from 'react-router-dom';
+import fetchApi from '../../fetch/fetch-api';
+import withRouter from '../../components/withRouter';
 
 let matTipos = {
     1: 'Admin',
@@ -11,7 +12,7 @@ let matTipos = {
     3: 'Dicente'
 }
 
-export default class MatriculaLogin extends Component {
+class MatriculaLogin extends Component {
 
     constructor(props) {
         super(props);
@@ -23,7 +24,7 @@ export default class MatriculaLogin extends Component {
     }
 
     componentDidMount() {
-        fetchapi('/api/matriculas', 'post')
+        fetchApi('/api/matriculas', 'post')
             .then(resp => {
                 if (resp.status == 200) {
                     resp.json().then(r => {
@@ -72,6 +73,18 @@ export default class MatriculaLogin extends Component {
             )
     }
 
+    handleLogin(e) {
+        e.preventDefault();
+        console.log( this.state.matricula);
+        fetchApi('/api/matricula', 'post', {matricula: this.state.matricula})
+            .then(resp => {
+                resp.json().then(r => {
+                    console.log(r);
+                    if(r.status == 200) this.props.navigate('/synclab/dashboard');
+                })
+            }).catch(e => console.log(e));
+    }
+
     render() {
         return (
             <div>
@@ -82,7 +95,7 @@ export default class MatriculaLogin extends Component {
                         <div className="matricula-box">
                             {this.renderMatriculas()}
                         </div>
-                        <button type="button" className='matricula-entrar-btn'>Entrar</button>
+                        <button type="button" className='matricula-entrar-btn' onClick={(e) => this.handleLogin(e)}>Entrar</button>
                         <button type="button"  className='matricula-solicitar-btn'>
                             <Link to="./requisitar" className='matricula-solicitar-btn'>Solicitar Matrícula</Link>
                         </button>
@@ -95,3 +108,5 @@ export default class MatriculaLogin extends Component {
     }
 
 }
+
+export default withRouter(MatriculaLogin);

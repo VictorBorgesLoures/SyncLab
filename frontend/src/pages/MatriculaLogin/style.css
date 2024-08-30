@@ -111,6 +111,7 @@ h1 {
 }
 
 .matricula-btn.disabled {
+    cursor: default;
     background-color: gray;
     color: white;
 }

@@ -10,8 +10,12 @@ function App({ children }) {
     .then(res => {
       console.log(res);
       res.json().then(r => {
-        console.log(r);
-        if (r.redirect && locate.pathname != r.redirect && r.redirect == '/login') navigate(r.redirect);
+        if(r.status == 200) {
+          if(!(/^\/synclab/.exec(locate.pathname))) navigate('/synclab');
+
+        } else {
+            if (r.redirect && locate.pathname != r.redirect && r.redirect == '/login') navigate(r.redirect);
+        }
       });
     }).catch(e => navigate('/'));
   return <Outlet></Outlet>
