@@ -11,8 +11,8 @@ function App({ children }) {
       console.log(res);
       res.json().then(r => {
         if(r.status == 200) {
-          if(!(/^\/synclab/.exec(locate.pathname))) navigate('/synclab');
-
+          if(locate.pathname == '/matricula') console.log("NAO MUDE");
+          else if(!(/^\/synclab/.exec(locate.pathname))) navigate('/synclab');
         } else {
             if (r.redirect && locate.pathname != r.redirect && r.redirect == '/login') navigate(r.redirect);
         }
