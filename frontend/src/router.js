@@ -5,7 +5,8 @@ import Login from './pages/Login';
 import SyncLab from './pages/SyncLab';
 import Dashboard from './pages/SyncLab/Dashboard';
 import MatriculaLogin from './pages/MatriculaLogin';
-import RequisitarMat from './pages/Requisitar'
+import RequisitarMat from './pages/Requisitar';
+import Projetos from "./pages/SyncLab/Projetos";
 
 const router = createBrowserRouter(
     [
@@ -37,7 +38,12 @@ const router = createBrowserRouter(
 
                         {
                             path: "dashboard",
-                            element: <Dashboard />
+                            element: <Dashboard />,
+                            
+                        },
+                        {
+                            path: 'projetos',
+                            element:<Projetos />
                         }
 
                     ]

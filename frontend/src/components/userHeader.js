@@ -3,6 +3,9 @@ import logo from '../assets/logo.png';
 
 export default function UserHeader(props) {
     console.log(props);
+    const user = {
+        username: 'wendell'
+    }
     return (
         <div className="user-container">
             <div className="profile-circle">
