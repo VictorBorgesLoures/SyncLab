@@ -41,7 +41,6 @@ class Login extends Component {
         return (
         <>
                 <Header showBtn={false} />
-                <div className="container">
                     <form className="login-form" onSubmit={e=> this.handleSubmit(e)}>
                         <h1 className='logintxt'>Login</h1>
                         <div className="form-group">
@@ -71,7 +70,6 @@ class Login extends Component {
                             </Link>
                         </div>
                     </form>
-                </div>
                 <Footer />
             </>
         )

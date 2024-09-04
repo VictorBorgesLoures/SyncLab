@@ -11,7 +11,9 @@ html, body {
 #root {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     min-height: 100vh;
+    padding:0;
 }
 
 .logintxt{
@@ -20,15 +22,18 @@ html, body {
 }
 
 .login-form {
-    margin-top:5%;
-    margin-bottom:5%;
+    width:1000px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom:12%;
     color:var(--purple);
-    text-align: center;
+    max-width: 450px;
+    align-self: center;
 }
 
 .form-group {
-    margin-left:25%;
-    margin-right:25%;
+    width:100%;
 }
 
 input {
@@ -64,7 +69,7 @@ input {
     transition: background-color 0.4s ease, color 0.4s ease;
     margin-right:3%;
     width:100%;
-    height:60px;
+    height:55px;
 }
 
 .submit-button:hover {
@@ -82,6 +87,6 @@ input {
     font-size: 16px;
     margin-right:3%;
     width:100%;
-    height:60px;
+    height:55px;
     margin-top:2%;
 }
