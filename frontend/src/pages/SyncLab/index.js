@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import UserHeader from '../../components/userHeader';
 import Painel from '../../components/painel';
 import './styles.css';
+import withRouter from '../../components/withRouter';
 
 class SyncLab extends Component {
     constructor(props) {
@@ -43,4 +44,4 @@ class SyncLab extends Component {
     }
 }
 
-export default SyncLab;
+export default withRouter(SyncLab);
