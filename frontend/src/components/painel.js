@@ -32,8 +32,6 @@ function Painel(props) {
             }
 
             return menu;
-        } else {
-            return <>Dashboard</>
         }
     }
 

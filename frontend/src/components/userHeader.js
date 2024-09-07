@@ -1,5 +1,6 @@
-import '../styles/global.css';
-import logo from '../assets/logo.png';
+import '../styles/global.css'
+import logo from '../assets/user.png';
+import { AiOutlineDown } from "react-icons/ai";
 
 export default function UserHeader(props) {
     console.log(props);
@@ -11,7 +12,10 @@ export default function UserHeader(props) {
             <div className="profile-circle">
                 <img src={logo} alt="Logo" className="user-logo" />
             </div>
-            <p>{props.user ? props.user.username : "default"}</p>
+            <div className="user-div">
+                <p className="user-name">{props.user ? props.user.username : "default"}</p>
+                <button className="icon-button"><AiOutlineDown /></button>
+            </div>
         </div>
     );
 }

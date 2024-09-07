@@ -3,6 +3,7 @@ import fetchApi from "../../fetch/fetch-api";
 import { Outlet } from "react-router-dom";
 import UserHeader from '../../components/userHeader';
 import Painel from '../../components/painel';
+import './styles.css';
 
 class SyncLab extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class SyncLab extends Component {
                 this.setState({user: r.data})
             });
         })
+        .catch(e=>console.log(e))
     }
 
     render() {
