@@ -80,7 +80,7 @@ class MatriculaLogin extends Component {
             .then(resp => {
                 resp.json().then(r => {
                     console.log(r);
-                    if(r.status == 200) this.props.navigate('/synclab/dashboard');
+                    if(r.status == 200) this.props.navigate('/synclab');
                 })
             }).catch(e => console.log(e));
     }

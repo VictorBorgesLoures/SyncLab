@@ -3,6 +3,7 @@ import fetchApi from "../../fetch/fetch-api";
 import { Outlet } from "react-router-dom";
 import UserHeader from '../../components/userHeader';
 import Painel from '../../components/painel';
+import withRouter from "../../components/withRouter";
 
 class SyncLab extends Component {
     constructor(props) {
@@ -21,7 +22,14 @@ class SyncLab extends Component {
             console.log(resp);
             resp.json().then(r => {
                 console.log(r);
-                this.setState({user: r.data})
+                this.setState({ user: r.data }, () => {
+                    if (this.state.user && this.state.user.matricula.tipo == 1) {
+                        this.props.navigate(this.props.locate.pathname == "/synclab" ? '/synclab/admin' : this.props.locate.pathname);
+                    } else {
+                        if (this.props.locate.pathname == '/synclab')
+                            this.props.navigate('dashboard');
+                    }
+                })
             });
         })
     }
@@ -41,4 +49,4 @@ class SyncLab extends Component {
     }
 }
 
-export default SyncLab;
+export default withRouter(SyncLab);
