@@ -3,10 +3,6 @@ import logo from '../assets/user.png';
 import { AiOutlineDown } from "react-icons/ai";
 
 export default function UserHeader(props) {
-    console.log(props);
-    const user = {
-        username: 'wendell'
-    }
     return (
         <div className="user-container">
             <div className="profile-circle">

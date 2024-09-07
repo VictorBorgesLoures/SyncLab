@@ -70,16 +70,21 @@ a {
 
 .painel-button {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     font-size:18px;
     width: 100%;
     font-weight: bold;
     color: var(--gray);
+    padding: 1em;
+    box-sizing: border-box;
 }
 
 .painel-button:hover, .painel-button.active {
     background-color: var(--fillpurple)
+}
+
+.painel-button.active > .panel-inside > a, .inside-panel-li.active > a {
+    pointer-events: none;
 }
 
 .icon-button {
@@ -102,6 +107,31 @@ a {
     width:180px;
     margin:12px;
 }
+
+.panel-inside {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inside-panel {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+} 
+
+.inside-panel.active {
+    display: block;
+}
+
+.inside-panel-li {
+    padding: 10px;
+}
+
+.inside-panel-li:hover {
+    background-color: var(--filldarkerpurple);
+} 
 
 .user-logo {
     width: 100%;

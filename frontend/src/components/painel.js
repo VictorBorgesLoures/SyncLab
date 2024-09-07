@@ -7,24 +7,52 @@ import { AiOutlineSend } from "react-icons/ai";
 
 function Painel(props) {
 
+    function isInRequisicoes() {
+        let regex = /^\/synclab\/admin\/requisicoes/
+        return regex.exec(props.locate.pathname);
+    }
+
+    function isInProjetos() {
+        let regex = /\/synclab\/admin\/requisicoes\/projetos/
+        return regex.exec(props.locate.pathname);
+    }
+
+    function isInMatriculas() {
+        let regex = /\/synclab\/admin\/requisicoes\/matriculas/
+        return regex.exec(props.locate.pathname);
+    }
+
     function renderUserMenu() {
-        if(props.user) {
+        if (props.user) {
             let menu = [];
-            if(props.user.matricula.tipo == 1) {
-                menu.push(<div className={props.locate.pathname == "/synclab/admin/requisicoes" ? "painel-button active" : "painel-button"} key="reqSideBar">
-                    <AiOutlineSend className={props.locate.pathname == "/synclab/admin/requisicoes" ? "icon-button active" : "icon-button"}/>
-                    <Link to='admin/requisicoes' relative='true'>
-                        <p className='painel-text' >Requisições</p>
-                    </Link>
+            if (props.user.matricula.tipo == 1) {
+                menu.push(<div className={isInRequisicoes() ? "painel-button active" : "painel-button"} key="reqSideBar">
+                    <AiOutlineSend className={isInRequisicoes() ? "icon-button active" : "icon-button"} />
+                    <div className="panel-inside">
+                        <Link className='painel-text' to='admin/requisicoes' relative='true'>Requisições</Link>
+                        <ul className={isInRequisicoes() ? "inside-panel active" : "inside-panel"}>
+                            <li className={isInMatriculas() ? "inside-panel-li active" : "inside-panel-li"}> 
+                                <Link className='painel-text' to='admin/requisicoes/matriculas' relative='true'>
+                                    Matriculas
+                                </Link>
+                            </li>
+                            <li className={isInProjetos() ? "inside-panel-li active" : "inside-panel-li"}> 
+                                <Link className='painel-text' to='admin/requisicoes/projetos' relative='true'>
+                                    Projetos
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                  
                 </div>);
             }
-            if(props.user.matricula.tipo == 2 || props.user.matricula.tipo == 3) {
+            if (props.user.matricula.tipo == 2 || props.user.matricula.tipo == 3) {
                 menu.push(<div className="painel-button" key="projSideBar">
                     <AiTwotoneProject />
                     <p className="painel-text">Projetos</p>
                 </div>);
-            } 
-            if(props.user.matricula.tipo == 3) {
+            }
+            if (props.user.matricula.tipo == 3) {
                 menu.push(
                     <div className="painel-button" key="atvSideBar">
                         <AiOutlineFundProjectionScreen />
@@ -39,8 +67,10 @@ function Painel(props) {
 
     return (
         <div className="painel-container">
-            <img src={Logo} className="painel-logo" alt="logo-painel"/>
-            {renderUserMenu()}            
+            <Link to="/synclab">
+                <img src={Logo} className="painel-logo" alt="logo-painel" />
+            </Link>
+            {renderUserMenu()}
         </div>
     )
 }
