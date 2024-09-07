@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/global.css';
+import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import { AiTwotoneProject } from "react-icons/ai";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -11,9 +11,11 @@ function Painel(props) {
         if(props.user) {
             let menu = [];
             if(props.user.matricula.tipo == 1) {
-                menu.push(<div className="painel-button" key="reqSideBar">
-                    <AiOutlineSend />
-                    <p className="painel-text">Requisições</p>
+                menu.push(<div className={props.locate.pathname == "/synclab/admin/requisicoes" ? "painel-button active" : "painel-button"} key="reqSideBar">
+                    <AiOutlineSend className={props.locate.pathname == "/synclab/admin/requisicoes" ? "icon-button active" : "icon-button"}/>
+                    <Link to='admin/requisicoes' relative='true'>
+                        <p className='painel-text' >Requisições</p>
+                    </Link>
                 </div>);
             }
             if(props.user.matricula.tipo == 2 || props.user.matricula.tipo == 3) {

@@ -8,14 +8,6 @@ html, body {
     height: 100%;
 }
 
-#root {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
-    padding:0;
-}
-
 .logintxt{
     color:var(--purple);
     font-size:48px;
