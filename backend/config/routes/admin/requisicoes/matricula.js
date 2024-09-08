@@ -5,7 +5,7 @@ import Admin from "../../../../src/models/Admin.js";
 export default app => {
 
     // api/admin/requisicoes/matricula/
-    app.get('/matricula', (req, res, next) => {
+    app.post('/matricula', (req, res, next) => {
         let admin = new Admin(req.session.user); //tipo de usuario admin
         admin.getReqMatriculas()
             .then(matriculas => {
@@ -26,25 +26,29 @@ export default app => {
         let matId = req.body.id;
         let matNovoStatus = req.body.status;
         admin.setReqMatriculaStatus(matId, matNovoStatus).then( resp => {
-            if(resp && matNovoStatus == "Aceito") {
-                admin.getReqMatricula(matId)
-                .then(reqMatricula => {
-                    if(reqMatricula) {
-                        admin.setMatricula(reqMatricula)
-                            .then(resp => {
-                                if(resp) res.status(200).json({status:200, msg: "Matrícula criada com sucesso!"});
-                                else res.status(400).json({status:400, msg: "Não foi possível criar a matrícula"});
-                            })
-                            .catch(e => {
-                                Logger.danger('api/admin/requisicoes/matricula/:id', e);
-                                res.status(500).json({status:500, msg:"Erro fatal no DB"});
-                            })
-                    } else res.status(404).json({status:404, msg: "Requisição Matrícula não encontrada"});
-                })
-                .catch(e => {
-                    Logger.danger('api/admin/requisicoes/matricula/:id', e);
-                    res.status(500).json({status:500, msg:"Erro fatal no DB"});
-                })
+            if(resp) {
+                if(matNovoStatus == "Aceito") {
+                    admin.getReqMatricula(matId)
+                    .then(reqMatricula => {
+                        if(reqMatricula) {
+                            admin.setMatricula(reqMatricula)
+                                .then(resp => {
+                                    if(resp) res.status(200).json({status:200, msg: "Matrícula criada com sucesso!"});
+                                    else res.status(400).json({status:400, msg: "Não foi possível criar a matrícula"});
+                                })
+                                .catch(e => {
+                                    Logger.danger('api/admin/requisicoes/matricula/:id', e);
+                                    res.status(500).json({status:500, msg:"Erro fatal no DB"});
+                                })
+                        } else res.status(404).json({status:404, msg: "Requisição Matrícula não encontrada"});
+                    })
+                    .catch(e => {
+                        Logger.danger('api/admin/requisicoes/matricula/:id', e);
+                        res.status(500).json({status:500, msg:"Erro fatal no DB"});
+                    })
+                } else {
+                    if(resp) res.status(200).json({status:200, msg: "Matrícula rejeitada com sucesso!"});
+                }
             } else {
                 res.status(404).json({status:404, msg:"Não foi possível atualizar status da requisição de matrícula"});
             }

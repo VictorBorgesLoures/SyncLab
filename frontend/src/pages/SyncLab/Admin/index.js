@@ -9,8 +9,6 @@ class Admin extends Component {
             this.props.navigate('synclab/dashboard');
         } else {
             document.title = 'SyncLab - Admin';
-            if(this.props.locate.pathname == 'synclab/admin')
-                this.props.navigate('synclab/admin/requisicoes');
         }
     }
 

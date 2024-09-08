@@ -37,11 +37,13 @@ export default app => {
     });
 
     app.get('/logout', async (req, res, next) => {
-        req.sessionStore.sessions[req.sessionId].id = null;
-        req.sessionStore.sessions[req.sessionId].matricula = null;
-        res.status(200).json({
-            status:200,
-            msg: "Logout feito com sucesso!"
-        })
+        console.log(req.session.user = null);
+        req.session.user = null
+        req.session.save(err => {
+            res.status(200).json({
+                status:200,
+                msg: "Logout feito com sucesso!"
+            })            
+        });   
     })
 }

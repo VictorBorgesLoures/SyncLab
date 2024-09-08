@@ -96,6 +96,7 @@ a {
 }
 
 .painel-text {
+    margin: 0;
     padding-left:10px;
     width: 100px;
     text-align: left;
@@ -132,6 +133,10 @@ a {
 .inside-panel-li:hover {
     background-color: var(--filldarkerpurple);
 } 
+
+.inside-panel-li.active {
+    background-color: var(--filldarkerpurple);
+}
 
 .user-logo {
     width: 100%;

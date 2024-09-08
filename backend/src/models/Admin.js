@@ -10,7 +10,7 @@ export default class Admin extends User {
     //retorna a requisição de matricula a partir do status
     getReqMatriculas() {
         return new Promise((resolve, reject) => {
-            let query = "select * from req_matricula where status='Em andamento';";
+            let query = "select rq.id, rq.matricula, rq.tipo, rq.status, u.nome  from req_matricula as rq, usuario as u where u.id = rq.idUsuario and status='Em andamento';";
             DBConnection.createPool(query)
                 .then(resp => {
                     if(resp.error == null) resolve(resp.data);
@@ -71,7 +71,7 @@ export default class Admin extends User {
     //retorna a requisição de projeto a partir do status
     getReqProjetos() {
         return new Promise((resolve, reject) => {
-            let query = "select * from req_projeto where status='Em andamento';";
+            let query = "select rq.id, rq.status, rq.nome, rq.descricao, u.nome as requerente  from req_projeto rq, usuario u, matricula m where rq.status='Em andamento' and rq.matricula=m.matricula and m.idUsuario=u.id;";
             DBConnection.createPool(query)
                 .then(resp => {
                     if(resp.error == null) resolve(resp.data);

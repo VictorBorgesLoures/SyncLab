@@ -9,6 +9,8 @@ import RequisitarMat from './pages/Requisitar';
 import Projetos from "./pages/SyncLab/Projetos";
 import Admin from "./pages/SyncLab/Admin"
 import Requisicoes from "./pages/SyncLab/Admin/requisicoes";
+import ReqMatricula from './pages/SyncLab/Admin/requisicoes/matricula'
+import ReqProjeto from './pages/SyncLab/Admin/requisicoes/projeto'
 
 const router = createBrowserRouter(
     [
@@ -52,8 +54,12 @@ const router = createBrowserRouter(
                             element: <Admin />,
                             children: [
                                 {
-                                    path: 'requisicoes',
-                                    element: <Requisicoes />,
+                                    path: 'requisicoes/projetos',
+                                    element: <ReqProjeto />,
+                                },
+                                {
+                                    path: 'requisicoes/matriculas',
+                                    element: <ReqMatricula />,
                                 }
                             ]
                         }

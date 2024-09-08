@@ -19,7 +19,7 @@ CREATE TABLE Laboratorio (
 
 CREATE TABLE Requisicao (
     idRequisicao INT AUTO_INCREMENT PRIMARY KEY,
-    status ENUM("Aceito","Recusado","Em andamento") DEFAULT "Em andamento",
+    status ENUM("Aceito","Recusado","Em Andamento") DEFAULT "Em Andamento",
     titulo VARCHAR(255) NOT NULL,
     descricao VARCHAR(1000) NOT NULL,
     idLab INT,
@@ -31,7 +31,7 @@ CREATE TABLE Projeto (
     idProjeto INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    status ENUM("Ativo","Desativado") DEFAULT "Desativado",
+    status ENUM("Ativo","Desativado") DEFAULT "Ativo",
     descricao VARCHAR(1000) NOT NULL,
     tutor INT NOT NULL
 );
@@ -40,7 +40,7 @@ CREATE TABLE Atividade (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descricao VARCHAR(1000) NOT NULL,
-    status ENUM("Finalizada","Em andamento","Pausada") DEFAULT ("Pausada"),
+    status ENUM("Finalizada","Em Andamento","Pausada") DEFAULT ("Em Andamento"),
     dataIni TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     dataFim TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     idProjeto INT NOT NULL
