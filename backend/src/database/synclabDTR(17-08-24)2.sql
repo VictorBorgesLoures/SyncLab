@@ -99,7 +99,7 @@ CREATE TABLE Req_Projeto (
 );
  
 ALTER TABLE Usuario ADD CONSTRAINT FK_Usuario_2
-    FOREIGN KEY (idEnrececo)
+    FOREIGN KEY (idEndereco)
     REFERENCES Endereco (id);
  
 ALTER TABLE Requisicao ADD CONSTRAINT FK_Requisicao_2
