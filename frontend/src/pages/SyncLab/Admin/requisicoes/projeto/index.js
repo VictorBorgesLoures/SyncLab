@@ -2,6 +2,7 @@ import { Component } from "react";
 import fetchApi from "../../../../../fetch/fetch-api";
 import Tabela from '../../../../../components/tabela';
 import withRouter from '../../../../../components/withRouter';
+import { AiFillSave } from "react-icons/ai";
 
 class ReqProjeto extends Component {
 
@@ -71,7 +72,7 @@ class ReqProjeto extends Component {
             tds.push(<td key={proj.id + "-projeto"}>{proj.nome}</td>);
             tds.push(<td key={proj.id + "-requerente"}>{proj.requerente}</td>);
             tds.push(<td key={proj.id + "-status"}>{this.buildSelect(proj.id, index, proj.status)}</td>);
-            tds.push(<td key={proj.id + "-click"} onClick={e => this.handleSaveStatus(e, proj.id, proj.status)}>S</td>);
+            tds.push(<td key={proj.id + "-click"} onClick={e => this.handleSaveStatus(e, proj.id, proj.status)}><AiFillSave /></td>);
             return tds;
         })
     }

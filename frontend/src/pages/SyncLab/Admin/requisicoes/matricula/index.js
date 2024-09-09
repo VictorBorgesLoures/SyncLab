@@ -3,6 +3,12 @@ import fetchApi from "../../../../../fetch/fetch-api";
 import Tabela from '../../../../../components/tabela';
 import withRouter from '../../../../../components/withRouter';
 
+let tipos = {
+    1:"Admin",
+    2:"Doscente",
+    3:"Discente"
+}
+
 class ReqMatricula extends Component {
 
     constructor(props) {
