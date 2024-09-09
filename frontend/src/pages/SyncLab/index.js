@@ -1,6 +1,6 @@
 import { Component } from "react";
 import fetchApi from "../../fetch/fetch-api";
-import { Outlet } from "react-router-dom";
+import { Outlet  } from "react-router-dom";
 import UserHeader from '../../components/userHeader';
 import Painel from '../../components/painel';
 import withRouter from "../../components/withRouter";
@@ -22,7 +22,6 @@ class SyncLab extends Component {
         fetchApi('/api/synclab/user', 'post').then(resp => {
             console.log(resp);
             resp.json().then(r => {
-                console.log(r);
                 this.setState({ user: r.data }, () => {
                     if (this.state.user && this.state.user.matricula.tipo == 1) {
                         this.props.navigate(this.props.locate.pathname == "/synclab" ? '/synclab/admin' : this.props.locate.pathname);
@@ -44,7 +43,7 @@ class SyncLab extends Component {
                 </div>
                 <div className="dashboard-content">
                     <UserHeader {...this.props} user={this.state.user}></UserHeader>
-                    <Outlet {...this.props} user={this.state.user}></Outlet>
+                    <Outlet context={[2]}></Outlet>
                 </div>
             </div>
         )

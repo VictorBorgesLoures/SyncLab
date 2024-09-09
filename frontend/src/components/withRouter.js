@@ -1,3 +1,4 @@
+import React from 'react'
 import { useNavigate, useLocation} from 'react-router-dom'; 
 
 const withRouter = WrappedComponent => props => {
@@ -6,7 +7,7 @@ const withRouter = WrappedComponent => props => {
   return (
     <WrappedComponent
       {...props}
-      {...{ navigate, locate}}
+      {...{ navigate, locate }}
     />
   );
 };

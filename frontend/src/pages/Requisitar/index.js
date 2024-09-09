@@ -9,7 +9,7 @@ import fetchApi from '../../fetch/fetch-api';
 let matTipos = {
     1: 'Admin',
     2: 'Docente',
-    3: 'Dicente'
+    3: 'Discente'
 }
 
 export default class RequisitarMatricula extends Component {

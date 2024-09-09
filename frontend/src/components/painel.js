@@ -15,17 +15,27 @@ class Painel extends Component {
     }
 
     componentDidMount() {
-        if (this.isInMatriculas() || this.isInProjetos()) {
+        if (this.isInAdminMatriculas() || this.isInAdminProjetos()) {
             this.setState({ isReqOpen: true })
         }
     }
 
-    isInProjetos() {
+    isInAdminProjetos() {
         let regex = /\/synclab\/admin\/requisicoes\/projetos/
         return regex.exec(this.props.locate.pathname);
     }
 
-    isInMatriculas() {
+    isInProjetos() {
+        let regex = /\/synclab\/projetos/
+        return regex.exec(this.props.locate.pathname);
+    }
+
+    isInAtividades() {
+        let regex = /\/synclab\/atividades/
+        return regex.exec(this.props.locate.pathname);
+    }
+
+    isInAdminMatriculas() {
         let regex = /\/synclab\/admin\/requisicoes\/matriculas/
         return regex.exec(this.props.locate.pathname);
     }
@@ -44,12 +54,12 @@ class Painel extends Component {
                     <div className="panel-inside">
                         <p className='painel-text' to='admin/requisicoes' relative='true' onClick={e => this.toogleRequisicoes(e)}>Requisições</p>
                         <ul className={this.state.isReqOpen ? "inside-panel active" : "inside-panel"}>
-                            <li className={this.isInMatriculas() ? "inside-panel-li active" : "inside-panel-li"}>
+                            <li className={this.isInAdminMatriculas() ? "inside-panel-li active" : "inside-panel-li"}>
                                 <Link className='painel-text' to='admin/requisicoes/matriculas' relative='true'>
                                     Matriculas
                                 </Link>
                             </li>
-                            <li className={this.isInProjetos() ? "inside-panel-li active" : "inside-panel-li"}>
+                            <li className={this.isInAdminProjetos() ? "inside-panel-li active" : "inside-panel-li"}>
                                 <Link className='painel-text' to='admin/requisicoes/projetos' relative='true'>
                                     Projetos
                                 </Link>
@@ -60,16 +70,16 @@ class Painel extends Component {
                 </div>);
             }
             if (this.props.user.matricula.tipo == 2 || this.props.user.matricula.tipo == 3) {
-                menu.push(<div className="painel-button" key="projSideBar">
+                menu.push(<div className={this.isInProjetos() ? "painel-button active" : "painel-button"} key="projSideBar">
                     <AiTwotoneProject />
-                    <p className="painel-text">Projetos</p>
+                    <Link to='projetos' className='painel-text'>Projetos</Link>
                 </div>);
             }
             if (this.props.user.matricula.tipo == 3) {
                 menu.push(
-                    <div className="painel-button" key="atvSideBar">
+                    <div className={this.isInAtividades() ? "painel-button active" : "painel-button"} key="atvSideBar">
                         <AiOutlineFundProjectionScreen />
-                        <p className="painel-text">Atividades</p>
+                        <Link to='atividades' className='painel-text'>Atividades</Link>
                     </div>
                 );
             }

@@ -2,14 +2,14 @@ import { Component } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import './style.css';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import fetchApi from '../../fetch/fetch-api';
 import withRouter from '../../components/withRouter';
 
 let matTipos = {
     1: 'Admin',
     2: 'Docente',
-    3: 'Dicente'
+    3: 'Discente'
 }
 
 class MatriculaLogin extends Component {
@@ -97,9 +97,8 @@ class MatriculaLogin extends Component {
                         </div>
                         <button type="button" className='matricula-entrar-btn' onClick={(e) => this.handleLogin(e)}>Entrar</button>
                         <button type="button"  className='matricula-solicitar-btn'>
-                            <Link to="./requisitar" className='matricula-solicitar-btn'>Solicitar Matrícula</Link>
+                            <Link to="/requisitar" className='matricula-solicitar-btn'>Solicitar Matrícula</Link>
                         </button>
-                        
                     </div>
                 </div>
                 <Footer />

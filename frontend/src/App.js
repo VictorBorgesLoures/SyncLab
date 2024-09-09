@@ -16,7 +16,7 @@ class App extends Component {
         res.json().then(r => {
           console.log(r);
           if (r.status == 200) {
-            if (this.props.locate.pathname == '/matricula') console.log("NAO MUDE");
+            if (this.props.locate.pathname==  '/matricula') console.log("NAO MUDE");
             else if (!(/^\/synclab/.exec(this.props.locate.pathname))) this.props.navigate('/synclab');
           } else {
             console.log(r.redirect);
