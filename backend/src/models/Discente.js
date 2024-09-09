@@ -6,7 +6,11 @@ export default class Discente extends User {
         return super(data);
     }
 
-
+    getProjetos() {
+        return new Promise((resolve, reject) => {
+            
+        });
+    }
 
 }
 
