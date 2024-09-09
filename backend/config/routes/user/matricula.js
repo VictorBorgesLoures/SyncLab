@@ -26,7 +26,6 @@ export default app => {
                         user.matricula = matricula;
                         req.session.user = user;
                         req.session.save(err => {
-                            console.log(req.sessionStore);
                             if (err) res.status(500).json({ status: 500, msg: "Não foi possível salvar a sessão" });
                             else res.status(200).json({ status: 200, msg: "Seleção de matrícula feita com sucesso" });
                         });

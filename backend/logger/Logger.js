@@ -31,7 +31,7 @@
     }
 
     logMessage(msg) {
-        let prod = process.env.PROD | false;
+        let prod = process.env.PROD || false;
         if(!prod) 
             console.log(msg);
     }

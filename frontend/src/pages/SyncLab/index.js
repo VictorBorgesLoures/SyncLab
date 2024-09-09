@@ -4,6 +4,7 @@ import { Outlet  } from "react-router-dom";
 import UserHeader from '../../components/userHeader';
 import Painel from '../../components/painel';
 import withRouter from "../../components/withRouter";
+import { UserContext } from "../../components/userContext";
 import './style.css';
 
 class SyncLab extends Component {
@@ -15,6 +16,7 @@ class SyncLab extends Component {
     }
 
     componentDidMount() {
+        console.log(this);
         this.getUser();
     }
 
@@ -37,15 +39,17 @@ class SyncLab extends Component {
 
     render() {
         return (
-            <div className="dashboard-container">
-                <div className="div-painel">
-                    <Painel {...this.props} user={this.state.user}></Painel>
-                </div>
-                <div className="dashboard-content">
-                    <UserHeader {...this.props} user={this.state.user}></UserHeader>
-                    <Outlet context={[2]}></Outlet>
-                </div>
-            </div>
+            <UserContext.Provider value={{user:this.state.user}}>
+                <div className="dashboard-container">
+                    <div className="div-painel">
+                        <Painel {...this.props} user={this.state.user}></Painel>
+                    </div>
+                    <div className="dashboard-content">
+                        <UserHeader {...this.props} user={this.state.user}></UserHeader>
+                        <Outlet ></Outlet>
+                    </div>
+                </div>                
+            </UserContext.Provider>
         )
     }
 }
