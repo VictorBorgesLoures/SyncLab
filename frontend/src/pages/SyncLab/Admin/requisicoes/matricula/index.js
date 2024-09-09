@@ -2,12 +2,8 @@ import { Component } from "react";
 import fetchApi from "../../../../../fetch/fetch-api";
 import Tabela from '../../../../../components/tabela';
 import withRouter from '../../../../../components/withRouter';
-
-let tipos = {
-    1:"Admin",
-    2:"Doscente",
-    3:"Discente"
-}
+import { AiFillSave } from "react-icons/ai";
+import userTipos from '../../../../../components/userTipos';
 
 class ReqMatricula extends Component {
 
@@ -75,10 +71,10 @@ class ReqMatricula extends Component {
         return this.state.reqMatriculas.map((mat, index) => {
             let tds = [];
             tds.push(<td key={mat.id + "-matricula"}>{mat.matricula}</td>);
-            tds.push(<td key={mat.id + "-tipo"}>{mat.tipo}</td>);
+            tds.push(<td key={mat.id + "-tipo"}>{userTipos[mat.tipo]}</td>);
             tds.push(<td key={mat.id + "-nome"}>{mat.nome}</td>);
             tds.push(<td key={mat.id + "-status"}>{this.buildSelect(mat.id, index, mat.status)}</td>);
-            tds.push(<td key={mat.id + "-click"} onClick={e => this.handleSaveStatus(e, mat.id, mat.status)}>S</td>);
+            tds.push(<td key={mat.id + "-click"} onClick={e => this.handleSaveStatus(e, mat.id, mat.status)}><AiFillSave /></td>);
             return tds;
         })
     }

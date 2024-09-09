@@ -15,7 +15,24 @@ let enumTypes = {
     "matriculaType": /[1-3]/
 };
 
-export default {
+let messageErros = {
+    "id": "Id inválido",
+    "email": "Email inválido",
+    "rua": "Rua inválido",
+    "numero": "Número inválido",
+    "cep": "CEP inválido",
+    "complemento": "complemento inválido",
+    "data": "data inválido",
+    "username": "username inválido",
+    "password": "password inválido",
+    "nome": "nome inválido",
+    "matricula": "matricula inválido",
+    "cpf": "cpf inválido",
+    "matricula": "matricula inválido",
+    "matriculaType": "matriculaType inválido",
+}
+
+let Helpers = {
     userIdType: (data) => {
         for (let type in enumTypes) {
             if ((type == "id" || type == "email") && enumTypes[type].exec(data)) {
@@ -23,26 +40,44 @@ export default {
             }
         }
         return null;
-    }, 
+    },
     isPassword: (data) => {
-        if(data)
+        if (data)
             return enumTypes["password"].exec(data);
         return false;
     },
     isName: (data) => {
-        if(data)
-            return enumTypes["nome"].exec(data);
+        if (data)
+            return enumTypes["name"].exec(data);
         return false;
-    }, 
+    },
     isMatricula: data => {
-        if(data)
+        if (data)
             return enumTypes["matricula"].exec(data);
         return false;
     },
     isMatriculaType: data => {
-        if(data)
+        if (data)
             return enumTypes["matriculaType"].exec(data);
         return false;
+    }
+}
+
+export default {
+    isValidId: (data) => {
+        return Helpers.userIdType(data);
+    },
+    isValidPassword: data => {
+        return Helpers.isPassword(data);
+    },
+    isValidName: data => {
+        return Helpers.isName(data);
+    },
+    isValidReqMatricula: data => {
+        return Helpers.isMatricula(data.matricula) && Helpers.isMatriculaType(data.tipo);
+    },
+    isValidMatricula: data => {
+        return Helpers.isMatricula(data);
     },
     isValidRegisterForm: (data) => {
         let e = []

@@ -24,7 +24,6 @@ input[type=number]::-webkit-inner-spin-button {
 
 form {
     width: 90%;
-    max-width:450px;
 }
 
 select {

@@ -3,6 +3,8 @@ import './style.css';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/header'
 import Footer from '../../components/footer'
+import dataValidators from '../../components/helpers';
+import fetchApi from '../../fetch/fetch-api';
 
 function Registro() {
     useEffect(() => {
@@ -16,18 +18,53 @@ function Registro() {
     const [data, setData] = useState('');
     const [username, setUsername] = useState('');
     const [nome, setNome] = useState('');
-    const [senha, setSenha] = useState('');
+    const [password, setSenha] = useState('');
     const [senhaconf, setSenhaconf] = useState('');
     const [email, setEmail] = useState('');
     const [cpf, setCpf] = useState('');
-    const [matricula, setMatricula] = useState('');
+
+    const navigate  = useNavigate()
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        let form = {
+            rua,
+            numero,
+            cep,
+            complemento,
+            data,
+            username,
+            nome,
+            password,
+            email,
+            cpf
+        }
+
+
+        let errors = dataValidators.isValidRegisterForm(form);
+        if(password != senhaconf) errors.push("Senhas não conferem");
+        
+        console.log(errors);
+        if(errors.length == 0) {
+            fetchApi("/registro", 'post', form)
+                .then(resp => {
+                    console.log(resp);
+                    resp.json().then(r => {
+                        console.log(r);
+                        if(r.status == 200) {
+                            navigate('/login');
+                        }
+                    })
+                })
+        }
+    }
 
     return (
         <>
             <Header showBtn={true} />
             <div className="container create-account-box">
 
-                <form className='form-box'>
+                <form className='form-box' onSubmit={e => handleSubmit(e)}>
                     <div>
                         <h1 className="title">Criar uma conta<br></br>SyncLab</h1>
                         <p className="label">Rua</p>
@@ -37,7 +74,7 @@ function Registro() {
                         id="rua"
                         value={rua}
                         onChange={(e) => setRua(e.target.value)}
-                        required
+                        
                         />
 
                         <div className="box-cep">
@@ -49,7 +86,7 @@ function Registro() {
                                 value={numero}
                                 onChange={(e) => setNumero(e.target.value)}
                                 id="text"
-                                required
+                                
                                 />
                             </div>
                             <div className="space"></div>
@@ -61,7 +98,7 @@ function Registro() {
                                 value={cep}
                                 onChange={(e) => setCep(e.target.value)}
                                 id="cep"
-                                required
+                                
                                 />
                             </div>
                         </div>
@@ -72,7 +109,7 @@ function Registro() {
                         value={complemento}
                         onChange={(e) => setComplemento(e.target.value)}
                         id="complemento"
-                        required
+                        
                         />
 
                     </div>
@@ -84,7 +121,7 @@ function Registro() {
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
                         id="nome"
-                        required
+                        
                         />
 
                         <p className="label">Endereço de E-mail</p>
@@ -94,7 +131,7 @@ function Registro() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         id="email"
-                        required
+                        
                         />
 
                         <div className="box-cep">
@@ -106,7 +143,7 @@ function Registro() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 id="username"
-                                required
+                                
                                 />
                             </div>
                             <div className="space"></div>
@@ -118,7 +155,7 @@ function Registro() {
                                 value={data}
                                 onChange={(e) => setData(e.target.value)}
                                 id="data"
-                                required
+                                
                                 />
                             </div>
                         </div>
@@ -128,9 +165,9 @@ function Registro() {
                         placeholder='Digite seu e-mail'
                         type="password"
                         id="senha"
-                        value={senha}
+                        value={password}
                         onChange={(e) => setSenha(e.target.value)}
-                        required
+                        
                         />
 
                         <p className="label">Confirmação de Senha</p>
@@ -140,7 +177,7 @@ function Registro() {
                         id="senha_conf"
                         value={senhaconf}
                         onChange={(e) => setSenhaconf(e.target.value)}
-                        required
+                        
                         />
 
                         <p className="label">CPF</p>
@@ -150,19 +187,8 @@ function Registro() {
                         id="cpf"
                         value={cpf}
                         onChange={(e) => setCpf(e.target.value)}
-                        required
+                        
                         />
-
-                        <p className="label">Matrícula</p>
-                        <input
-                        placeholder='Digite sua matrícula'
-                        type="text"
-                        id="matricula"
-                        value={matricula}
-                        onChange={(e) => setMatricula(e.target.value)}
-                        required
-                        />
-
                         <button className="submit-register">Registrar</button>
                     </div>
                 </form>

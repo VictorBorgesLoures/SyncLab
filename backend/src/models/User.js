@@ -56,13 +56,14 @@ export default class User {
 
     static fetchEndereco(cep) {
         return new Promise((resolve, reject) => {
-            let query = "select id from endereco where cep=?;";
+            let query = "select * from endereco where cep=?;";
             DBConnection.createPool(query, [cep])
                 .then(resp => {
                     if (resp.error) {
                         resolve(null);
-                    } else if (resp.data.length > 0)
-                        resolve(new Endereco(data[0]));
+                    } else if (resp.data.length > 0) {
+                        resolve(new Endereco(resp.data[0]));
+                    }
                     else
                         resolve(null);
                 })
@@ -97,10 +98,16 @@ export default class User {
     }
 
     //Create a new User on Database with the params
-    static Registrar(data, endereco) {
+    static Registrar(data) {
         return new Promise((resolve, reject) => {
+            let endereco = {
+                "cep": data.cep,
+                "rua": data.rua
+            }
             this.fetchEndereco(endereco.cep)
                 .then(async endDB => {
+                    console.log("?????")
+                    console.log(endDB);
                     let endId;
                     if (endDB == null) {
                         Logger.info("Register", endereco);
@@ -121,7 +128,7 @@ export default class User {
                     if (fields.length == 0) {
                         // exec query
                         let query = "insert into usuario(nome, username, senha, dataNasc, email, cpf, numero, complemento, idEndereco) value(?,?,?,?,?,?,?,?,?);";
-                        let keys = [data.nome, data.username, data.senha, data.dataNasc, data.email, data.cpf, data.numero, data.complemento, endId];
+                        let keys = [data.nome, data.username, data.password, data.data, data.email, data.cpf, data.numero, data.complemento, endId];
                         DBConnection.createPool(query, keys)
                             .then(createUserResponse => {
                                 if (createUserResponse.error == null && createUserResponse.data.affectedRows > 0) {

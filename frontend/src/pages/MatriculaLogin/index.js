@@ -85,6 +85,13 @@ class MatriculaLogin extends Component {
             }).catch(e => console.log(e));
     }
 
+    handleLogout(e) {
+        e.preventDefault();
+        fetchApi('/logout', "get").then(r => {
+            if(r.status == 200) this.props.navigate('/login');
+        })
+    }
+
     render() {
         return (
             <div>
@@ -96,6 +103,7 @@ class MatriculaLogin extends Component {
                             {this.renderMatriculas()}
                         </div>
                         <button type="button" className='matricula-entrar-btn' onClick={(e) => this.handleLogin(e)}>Entrar</button>
+                        <button type="button" className='matricula-entrar-btn' onClick={(e) => this.handleLogout(e)}>Sair</button>
                         <button type="button"  className='matricula-solicitar-btn'>
                             <Link to="/requisitar" className='matricula-solicitar-btn'>Solicitar Matrícula</Link>
                         </button>

@@ -47,7 +47,7 @@ body {
     justify-content: space-between;
     flex-direction: row;
     width: 80%;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .form-box>div {

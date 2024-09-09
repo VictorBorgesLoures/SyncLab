@@ -46,13 +46,7 @@ const router = createBrowserRouter(
                         },
                         {
                             path: 'projetos',
-                            element:<Projetos />,
-                            children: [
-                                {
-                                    path: 'solicitar',
-                                    element: <SolicarProjeto />
-                                }
-                            ]
+                            element:<Projetos />
                         },
                         {
                             path: 'admin',

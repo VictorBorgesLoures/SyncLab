@@ -32,7 +32,7 @@
 
     logMessage(msg) {
         let prod = process.env.PROD || false;
-        if(!prod) 
+        if(prod) 
             console.log(msg);
     }
 }
